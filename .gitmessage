@@ -1,0 +1,25 @@
+# <tipo>[ámbito opcional]: <descripción>
+# EJEMPLO: feat(auth): añade login con google
+#
+# Tipos permitidos:
+#   feat     : Nueva característica
+#   fix      : Corrección de un error (bug)
+#   docs     : Cambios en la documentación
+#   style    : Cambios de formato (espacios, comas, etc) sin afectar código
+#   refactor : Refactorización de código (ni bug, ni feature)
+#   perf     : Mejora de rendimiento
+#   test     : Añadir/modificar pruebas
+#   chore    : Mantenimiento (dependencias, configuraciones)
+#   build    : Cambios en el sistema de compilación (Gradle, pnpm)
+#
+# Reglas:
+# - Escribe en minúsculas.
+# - Usa el modo imperativo ("añade", no "añadido" ni "añadiendo").
+# - No pongas punto (.) al final de la primera línea.
+# ---------------------------------------------------------
+
+# [Opcional] Cuerpo del mensaje: ¿Por qué se hizo el cambio y cómo funciona?
+
+
+# [Opcional] Referencia a un Issue: ej. Fixes #123
+

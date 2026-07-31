@@ -1,0 +1,23 @@
+version: 2
+updates:
+  # Maintain dependencies for npm/pnpm/yarn weekly
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "fix(deps)"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
+  
+  # Maintain GitHub Actions weekly
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci(deps)"

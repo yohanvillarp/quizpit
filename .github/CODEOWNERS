@@ -1,0 +1,19 @@
+# Global Owner
+* @yohanvillarp
+
+# Clients
+/apps/cliente-mobile/ @yohanvillarp
+/apps/cliente-web/ @yohanvillarp
+
+# Backend Services
+/apps/api-core/ @yohanvillarp
+/apps/game-engine/ @yohanvillarp
+
+# Management & Configuration
+/apps/studio/ @yohanvillarp
+
+# Shared Code
+/packages/ @yohanvillarp
+
+# Workflows & Configuration
+/.github/ @yohanvillarp
