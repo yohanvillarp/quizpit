@@ -26,7 +26,7 @@ jobs:
         run: pnpm install
         
       - name: Build with Turborepo
-        run: pnpm run build --if-present
+        run: pnpm run build
         
       - name: Test with Turborepo
-        run: pnpm run test --if-present
+        run: pnpm run test
