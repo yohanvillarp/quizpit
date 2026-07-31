@@ -33,3 +33,10 @@ El ecosistema está dividido en 5 aplicaciones core y paquetes compartidos:
 ## 6. Cumplimiento Estricto de Reglas
 - **Sin atajos**: NINGÚN agente de IA está autorizado a saltarse las reglas del repositorio, lineamientos de código o convenciones arquitectónicas bajo la excusa de "ahorrar tiempo" o simplificar una tarea.
 - **Autorización explícita**: Si por alguna razón técnica o estructural es imposible cumplir una regla, el agente DEBE detenerse, justificar detalladamente el motivo y solicitar autorización explícita al usuario antes de proceder.
+
+## 7. Arquitecturas Obligatorias por Aplicación
+Para mantener una alta cohesión y bajo acoplamiento, los agentes deben apegarse estrictamente a la arquitectura de cada aplicación. **NUNCA** debes mezclar patrones ni saltarte las capas predefinidas:
+
+- **`api-core` y `game-engine` (Backend)**: Usan **Arquitectura Hexagonal (Clean Architecture)**. TODO código nuevo debe separarse estrictamente en capas: `domain` (reglas puras, sin dependencias), `application` (orquestación/casos de uso) e `infrastructure` (controladores web, TypeORM/Prisma, sockets). Las importaciones deben usar alias absolutos (ej. `@quiz/domain/...`).
+- **`studio` (Frontend React)**: Usa **Feature-Sliced Design (FSD)**. Cada nuevo elemento visual o lógico debe colocarse correctamente en su capa: `app`, `pages`, `widgets`, `features`, `entities`, o `shared`.
+- **`cliente-mobile` (Android)**: Usa **Arquitectura Multi-Módulo**. Separación rígida entre `core` (lógica) y `feature` (UI Jetpack Compose).
