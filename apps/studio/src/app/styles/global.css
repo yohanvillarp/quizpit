@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* 
+  FSD Architecture: 
+  This file belongs to the App layer (app/styles).
+  It should only import global styles and tailwind directives.
+*/
