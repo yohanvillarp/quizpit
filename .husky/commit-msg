@@ -1,1 +1,9 @@
-npx --no-install commitlint --edit "$1"
+echo "[INFO] Validando sintaxis del commit (Conventional Commits)..."
+
+if npx --no-install commitlint --edit "$1"; then
+  echo "[SUCCESS] El commit cumple con los estandares arquitectonicos."
+else
+  echo ""
+  echo "[ERROR] El mensaje del commit no sigue la norma (ej. feat: anade login)."
+  exit 1
+fi
