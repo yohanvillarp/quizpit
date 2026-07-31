@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------
+  # INFRAESTRUCTURA (Bases de datos y caché local)
+  # (Se sustituirán por servicios de Azure en producción)
+  # ----------------------------------------------------
+  postgres:
+    image: postgres:15-alpine
+    container_name: quizpit-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: quizpit_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d quizpit_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: quizpit-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------
+  # BACKEND MICROSERVICES
+  # ----------------------------------------------------
+  api-core:
+    build:
+      context: .
+      dockerfile: apps/api-core/Dockerfile
+    container_name: quizpit-api-core
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgresql://admin:password@postgres:5432/quizpit_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  game-engine:
+    build:
+      context: .
+      dockerfile: apps/game-engine/Dockerfile
+    container_name: quizpit-game-engine
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  # ----------------------------------------------------
+  # FRONTEND CLIENTS
+  # ----------------------------------------------------
+  cliente-web:
+    build:
+      context: .
+      dockerfile: apps/cliente-web/Dockerfile
+    container_name: quizpit-cliente-web
+    ports:
+      - "8080:80"
+    depends_on:
+      - api-core
+      - game-engine
+
+  studio:
+    build:
+      context: .
+      dockerfile: apps/studio/Dockerfile
+    container_name: quizpit-studio
+    ports:
+      - "8081:80"
+    depends_on:
+      - api-core
+
+volumes:
+  postgres_data:
