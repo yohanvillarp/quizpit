@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "icons8": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.icons8.com/mcp/"
+      ]
+    }
+  }
+}

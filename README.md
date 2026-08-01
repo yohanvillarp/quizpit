@@ -8,6 +8,7 @@ QuizPit is a real-time multiplayer educational game designed to make studying ac
 - [Core Features](#core-features)
 - [Architecture](#architecture)
 - [Quick Start](#quick-start)
+- [Credits](#credits)
 - [License](#license)
 
 ## Core Features
@@ -46,6 +47,9 @@ This project is a hybrid monorepo containing 5 core applications, structured for
 
 4. **Run the Android Client:**
    Open the `/apps/cliente-mobile` directory directly in Android Studio.
+
+## Credits
+- **UI Icons:** Premium icons provided by [Icons8](https://icons8.com).
 
 ## License
 This project is licensed under the [MIT License](LICENSE).

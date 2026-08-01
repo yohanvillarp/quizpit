@@ -40,3 +40,19 @@ Para mantener una alta cohesión y bajo acoplamiento, los agentes deben apegarse
 - **`api-core` y `game-engine` (Backend)**: Usan **Arquitectura Hexagonal (Clean Architecture)**. TODO código nuevo debe separarse estrictamente en capas: `domain` (reglas puras, sin dependencias), `application` (orquestación/casos de uso) e `infrastructure` (controladores web, TypeORM/Prisma, sockets). Las importaciones deben usar alias absolutos (ej. `@quiz/domain/...`).
 - **`studio` (Frontend React)**: Usa **Feature-Sliced Design (FSD)**. Cada nuevo elemento visual o lógico debe colocarse correctamente en su capa: `app`, `pages`, `widgets`, `features`, `entities`, o `shared`.
 - **`cliente-mobile` (Android)**: Usa **Arquitectura Multi-Módulo**. Separación rígida entre `core` (lógica) y `feature` (UI Jetpack Compose).
+
+## 8. Lineamientos de UI/UX (Cliente Mobile)
+El cliente de Android utiliza Jetpack Compose y sigue un sistema de diseño estricto basado en un concepto de **"Analog Sketchbook"** (Cuaderno de Bocetos Analógico).
+
+### Estética y Colores
+- **Prohibido hardcodear colores HEX** en los componentes UI.
+- Todos los colores deben mapearse semánticamente a través de `MaterialTheme.colorScheme` definido en `Theme.kt` y `Color.kt`.
+- Colores base (modo claro/oscuro soportados): `Paper` (Fondo/Superficie), `Ink` (Texto/Iconos), `HighYellow` / `HighPink` (Resaltadores/Primario-Secundario).
+- **Iconografía**: Los iconos deben ser SVGs preferiblemente estilo "Doodle" / "Hand Drawn", de tamaño `24dp`, importados como `Vector Assets`.
+
+### Internacionalización (i18n)
+- **Prohibido hardcodear textos (Strings)** en las vistas.
+- Todo texto visible debe extraerse al sistema de recursos nativo de Android:
+  - `res/values/strings.xml` (Idioma base/por defecto: Inglés).
+  - `res/values-es/strings.xml` (Idioma: Español).
+- Consumo en Jetpack Compose: `stringResource(id = R.string.nombre_del_texto)`.
