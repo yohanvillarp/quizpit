@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">QuizPit</string>
+    <string name="test_paywall_button">Probar Paywall Nativo</string>
+    
+    <!-- Navegación -->
+    <string name="nav_familiars">Familiares</string>
+    <string name="nav_home">Inicio</string>
+    <string name="nav_store">Tienda</string>
+    
+    <!-- Pantallas -->
+    <string name="screen_familiars_title">Pantalla de Familiares</string>
+    <string name="screen_home_title">Pantalla Principal (Jugar)</string>
+    <string name="screen_store_title">Pantalla de Tienda</string>
+</resources>
