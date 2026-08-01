@@ -1,0 +1,41 @@
+name: 🐛 Reporte de Bug / Bug Report
+description: "Crea un reporte de error detallado / Create a detailed bug report"
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Gracias por tomarte el tiempo para reportar este error. / Thank you for taking the time to report this bug."
+  - type: textarea
+    id: description
+    attributes:
+      label: "📝 Descripción del Error / Bug Description"
+      description: "¿Qué pasó exactamente? / What exactly happened?"
+      placeholder: "Cuando intento hacer login, la aplicación crashea..."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: "🔄 Pasos para Reproducir / Steps to Reproduce"
+      description: "Ejemplo: 1. Ve a '/login', 2. Haz clic en 'Submit', 3. Observa el error 500."
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: "🏢 Entorno / Environment"
+      options:
+        - "api-core (Backend)"
+        - "game-engine (Sockets)"
+        - "studio (Web Frontend)"
+        - "cliente-mobile (Android)"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: "🖥️ Logs o Capturas / Logs or Screenshots"
+      description: "Pega aquí los logs de la terminal o arrastra capturas de pantalla."
+    validations:
+      required: false

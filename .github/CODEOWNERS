@@ -1,19 +1,17 @@
-# Global Owner
+# Archivo de CODEOWNERS
+# Documentación: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Dueño global por defecto para todo el repositorio
 * @yohanvillarp
 
-# Clients
+# Dueños específicos por capa arquitectónica (puedes agregar los usuarios de GitHub de tu equipo aquí)
+/apps/api-core/       @yohanvillarp
+/apps/game-engine/    @yohanvillarp
+/apps/studio/         @yohanvillarp
 /apps/cliente-mobile/ @yohanvillarp
-/apps/cliente-web/ @yohanvillarp
 
-# Backend Services
-/apps/api-core/ @yohanvillarp
-/apps/game-engine/ @yohanvillarp
-
-# Management & Configuration
-/apps/studio/ @yohanvillarp
-
-# Shared Code
-/packages/ @yohanvillarp
-
-# Workflows & Configuration
-/.github/ @yohanvillarp
+# Configuración crítica del repositorio e infraestructura
+/.github/             @yohanvillarp
+/.agents/             @yohanvillarp
+/docker-compose.yml   @yohanvillarp
+/Makefile             @yohanvillarp

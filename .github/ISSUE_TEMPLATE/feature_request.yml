@@ -1,0 +1,26 @@
+name: ✨ Nueva Funcionalidad / Feature Request
+description: "Sugiere una mejora concreta para el código / Suggest a concrete code improvement"
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "**Nota:** Las ideas muy complejas o refactorizaciones deben ir a GitHub Discussions (Idea o Arquitectura). Usa esta plantilla para tareas o tickets de desarrollo directos."
+  - type: textarea
+    id: feature
+    attributes:
+      label: "💡 Descripción de la Funcionalidad / Feature Description"
+      description: "¿Qué funcionalidad exacta debe implementarse en el código?"
+    validations:
+      required: true
+  - type: dropdown
+    id: app
+    attributes:
+      label: "🏢 Aplicación / App"
+      options:
+        - "api-core"
+        - "game-engine"
+        - "studio"
+        - "cliente-mobile"
+    validations:
+      required: true

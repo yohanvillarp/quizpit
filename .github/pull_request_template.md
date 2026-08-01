@@ -1,27 +1,26 @@
-## Description 📝
-Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context.
+## 📝 Descripción / Description
+<!-- Describe brevemente los cambios de este PR / Briefly describe the changes in this PR -->
 
-Fixes # (issue)
 
-> ⚠️ **Nota:** Asegúrate de que el título de este PR siga [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (ej. `feat(auth): añade login`, `fix(ui): corrige botón`).
+## 🎯 Tipo de cambio / Type of change
+- [ ] 🐛 Bugfix (Corrección de error)
+- [ ] ✨ Feature (Nueva característica)
+- [ ] ♻️ Refactor (Cambio de arquitectura/código sin alterar funcionalidad)
+- [ ] 📚 Docs (Actualización de documentación)
+- [ ] 🛠️ Build/CI (Cambios en configuración de despliegue o dependencias)
 
-## Target 🎯
-Which app or package does this PR affect?
-- [ ] `apps/cliente-mobile` (Android/Kotlin)
-- [ ] `apps/backend-api`
-- [ ] `packages/*`
-- [ ] Other: 
+## 🏗️ Aplicación Afectada / Affected App
+- [ ] `api-core` (Backend)
+- [ ] `game-engine` (Realtime / Sockets)
+- [ ] `studio` (React Dashboard)
+- [ ] `cliente-mobile` (Android)
+- [ ] `packages/*` (Shared code)
+- [ ] `Infraestructura` (Docker, GitHub Actions, etc)
 
-## Type of change 🔄
-- [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
-- [ ] ✨ New feature (non-breaking change which adds functionality)
-- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] 📖 Documentation update
+## ✅ Checklist
+- [ ] He revisado mi propio código.
+- [ ] He probado que mis cambios funcionan localmente (`pnpm run test`, `build`, etc).
+- [ ] El código sigue estrictamente las reglas del `AGENTS.md` (Hexagonal, FSD, etc).
 
-## Checklist ✅
-- [ ] I have performed a self-review of my own code.
-- [ ] My commits follow Conventional Commits.
-- [ ] I have commented my code, particularly in hard-to-understand areas.
-- [ ] I have made corresponding changes to the documentation.
-- [ ] My changes generate no new warnings.
-- [ ] I have checked my code and fully tested the changes.
+## 📸 Screenshots / Demos (Si aplica)
+<!-- Arrastra aquí tus capturas de pantalla o videos / Drag and drop screenshots or videos here -->
