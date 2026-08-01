@@ -1,0 +1,13 @@
+title: "[Q&A] "
+body:
+  - type: markdown
+    attributes:
+      value: "Ask any question about the project here! / ¡Haz cualquier pregunta sobre el proyecto aquí!\n\nYou can write in English or Spanish. / Puedes escribir en Inglés o Español."
+  - type: textarea
+    id: question
+    attributes:
+      label: "❓ Question / Pregunta"
+      description: "Be as detailed as possible to get a good answer. / Sé lo más detallado posible para obtener una buena respuesta."
+      placeholder: "How do I run the Android app locally? / ¿Cómo corro la app de Android en local?"
+    validations:
+      required: true

@@ -1,0 +1,30 @@
+title: "[Architecture] "
+body:
+  - type: markdown
+    attributes:
+      value: "Use this template for Architecture Decision Records (ADRs). / Usa esta plantilla para decisiones arquitectónicas (ADRs).\n\nYou can write in English or Spanish. / Puedes escribir en Inglés o Español."
+  - type: textarea
+    id: context
+    attributes:
+      label: "📚 Technological Context / Contexto Tecnológico"
+      description: "What technical bottleneck leads to this? / ¿Qué cuello de botella técnico nos lleva a esto?"
+      placeholder: "When trying to implement RevenueCat... / Al tratar de implementar RevenueCat..."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "🏗️ Proposed Architecture Change / Cambio de Arquitectura Propuesto"
+      description: "Ensure it respects AGENTS.md rules. / Asegúrate de que respeta las reglas del AGENTS.md."
+      placeholder: "I propose creating a new adapter... / Propongo crear un nuevo adaptador..."
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Verifications / Verificaciones"
+      options:
+        - label: "I have read AGENTS.md / He leído el AGENTS.md global"
+          required: true
+        - label: "Does not break layer encapsulation / No rompe el encapsulamiento de capas"
+          required: false

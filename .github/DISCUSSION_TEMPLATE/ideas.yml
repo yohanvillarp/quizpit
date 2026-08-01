@@ -1,0 +1,33 @@
+title: "[Idea] "
+body:
+  - type: markdown
+    attributes:
+      value: "Thank you for proposing an improvement for **QuizPit**! / ¡Gracias por proponer una mejora para **QuizPit**!\n\nPlease fill out this form in English or Spanish. / Por favor, llena este formulario en Inglés o Español."
+  - type: textarea
+    id: problem
+    attributes:
+      label: "🎯 Need or Problem / Necesidad o Problema"
+      description: "Describe what is missing or what you'd like to improve. / Describe qué falta o qué te gustaría mejorar."
+      placeholder: "Currently, users cannot... / Actualmente los usuarios no pueden..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: "💡 Proposed Solution / Solución Propuesta"
+      description: "How do you envision this working? / ¿Cómo te imaginas que debería funcionar?"
+      placeholder: "I suggest adding a button that... / Sugiero que agreguemos un botón que..."
+    validations:
+      required: true
+  - type: dropdown
+    id: app
+    attributes:
+      label: "🏢 Affected Application / Aplicación Afectada"
+      options:
+        - "Platform (Monorepo)"
+        - "Backend (api-core)"
+        - "Realtime (game-engine)"
+        - "Frontend Dashboard (studio)"
+        - "Android App (cliente-mobile)"
+    validations:
+      required: true
