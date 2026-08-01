@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Analog Sketchbook Base Colors -->
+    <color name="paper_light">#FFF4F1ED</color>
+    <color name="paper_dark">#FF1C1B1F</color>
 </resources>

@@ -2,4 +2,14 @@
 <resources>
 
     <style name="Theme.Quizpit" parent="android:Theme.Material.Light.NoActionBar" />
+    
+    <!-- Splash Screen Theme -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- El color de fondo del splash (PaperLight) -->
+        <item name="windowSplashScreenBackground">@color/paper_light</item>
+        <!-- El icono que irá al centro (logo animado o estático) -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_quizpit</item>
+        <!-- Tema principal a cargar luego del splash -->
+        <item name="postSplashScreenTheme">@style/Theme.Quizpit</item>
+    </style>
 </resources>
