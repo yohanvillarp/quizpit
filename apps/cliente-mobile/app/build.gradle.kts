@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -5,6 +7,11 @@ plugins {
 
 android {
     namespace = "tech.nikelyh.quizpit"
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -19,6 +26,19 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Leer llaves seguras desde secrets.properties
+        val properties = Properties()
+        val secretsFile = project.rootProject.file("secrets.properties")
+        if (secretsFile.exists()) {
+            properties.load(secretsFile.inputStream())
+        }
+
+        val debugKey = properties.getProperty("REVENUECAT_API_KEY_DEBUG", "\"\"")
+        val releaseKey = properties.getProperty("REVENUECAT_API_KEY_RELEASE", "\"\"")
+
+        // Inyectamos por defecto la de debug (para compilaciones en desarrollo)
+        buildConfigField("String", "REVENUECAT_API_KEY", debugKey)
     }
 
     buildTypes {
@@ -28,15 +48,21 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Sobrescribimos con la llave de producción al compilar para la tienda
+            val properties = Properties()
+            val secretsFile = project.rootProject.file("secrets.properties")
+            if (secretsFile.exists()) {
+                properties.load(secretsFile.inputStream())
+            }
+            val releaseKey = properties.getProperty("REVENUECAT_API_KEY_RELEASE", "\"\"")
+            buildConfigField("String", "REVENUECAT_API_KEY", releaseKey)
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    buildFeatures {
-        compose = true
-    }
+    // buildFeatures ya fue configurado arriba
 }
 
 dependencies {
@@ -55,4 +81,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    implementation("com.revenuecat.purchases:purchases:10.16.0")
+    implementation("com.revenuecat.purchases:purchases-ui:10.16.0")
+    
+    // Navegación
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 }
