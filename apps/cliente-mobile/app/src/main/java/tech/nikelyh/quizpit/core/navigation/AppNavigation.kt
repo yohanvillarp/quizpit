@@ -24,8 +24,10 @@ fun AppNavigation() {
 
     // Mapeamos la ruta actual al destino enum correspondiente
     val currentDestination = when (currentRoute) {
-        "inventory" -> TopLevelDestination.FAMILIARS
         "store" -> TopLevelDestination.STORE
+        "inventory" -> TopLevelDestination.FAMILIARS
+        "roulette" -> TopLevelDestination.ROULETTE
+        "profile" -> TopLevelDestination.PROFILE
         else -> TopLevelDestination.HOME
     }
 
@@ -35,9 +37,11 @@ fun AppNavigation() {
                 currentDestination = currentDestination,
                 onNavigateToDestination = { destination ->
                     val route = when (destination) {
+                        TopLevelDestination.STORE -> "store"
                         TopLevelDestination.FAMILIARS -> "inventory"
                         TopLevelDestination.HOME -> "home"
-                        TopLevelDestination.STORE -> "store"
+                        TopLevelDestination.ROULETTE -> "roulette"
+                        TopLevelDestination.PROFILE -> "profile"
                     }
                     // Solo navegar si la ruta es diferente a la actual
                     if (currentRoute != route) {
@@ -58,14 +62,20 @@ fun AppNavigation() {
             startDestination = "home",
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable("store") {
+                StoreScreen()
+            }
             composable("inventory") {
                 InventoryScreen()
             }
             composable("home") {
                 HomeScreen()
             }
-            composable("store") {
-                StoreScreen()
+            composable("roulette") {
+                tech.nikelyh.quizpit.feature.roulette.RouletteScreen()
+            }
+            composable("profile") {
+                tech.nikelyh.quizpit.feature.profile.ProfileScreen()
             }
         }
     }

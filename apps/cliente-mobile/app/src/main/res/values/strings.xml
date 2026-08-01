@@ -6,9 +6,13 @@
     <string name="nav_familiars">Familiars</string>
     <string name="nav_home">Home</string>
     <string name="nav_store">Store</string>
+    <string name="nav_roulette">Roulette</string>
+    <string name="nav_profile">Profile</string>
     
     <!-- Screens -->
     <string name="screen_familiars_title">Familiars Screen</string>
     <string name="screen_home_title">Main Screen (Play)</string>
     <string name="screen_store_title">Store Screen</string>
+    <string name="screen_roulette_title">Roulette Screen</string>
+    <string name="screen_profile_title">Profile Screen</string>
 </resources>

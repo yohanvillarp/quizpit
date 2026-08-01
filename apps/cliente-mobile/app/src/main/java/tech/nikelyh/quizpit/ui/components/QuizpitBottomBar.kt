@@ -14,9 +14,11 @@ enum class TopLevelDestination(
     @androidx.annotation.StringRes val titleRes: Int,
     @DrawableRes val iconRes: Int
 ) {
+    STORE(R.string.nav_store, R.drawable.ic_store),
     FAMILIARS(R.string.nav_familiars, R.drawable.ic_familiars),
     HOME(R.string.nav_home, R.drawable.ic_home),
-    STORE(R.string.nav_store, R.drawable.ic_store)
+    ROULETTE(R.string.nav_roulette, R.drawable.ic_roulette),
+    PROFILE(R.string.nav_profile, R.drawable.ic_profile)
 }
 
 @Composable
