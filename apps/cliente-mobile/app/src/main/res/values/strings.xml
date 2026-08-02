@@ -21,4 +21,6 @@
     <string name="home_join_button">JOIN</string>
     <string name="home_or_separator">OR</string>
     <string name="home_create_game_button">CREATE GAME</string>
+    <string name="home_events">Events</string>
+    <string name="home_history">History</string>
 </resources>
