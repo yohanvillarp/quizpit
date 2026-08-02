@@ -77,9 +77,10 @@ fun SketchbookButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .offset(x = surfaceOffset, y = surfaceOffset)
-                .background(currentBgColor, RoundedCornerShape(cornerRadius))
-                .border(borderWidth, currentBorderColor, RoundedCornerShape(cornerRadius))
+                .background(Color(0xFFFAF9F5), RoundedCornerShape(cornerRadius)) // Fondo de papel sólido
                 .clip(RoundedCornerShape(cornerRadius))
+                .sketchbookColoring(currentBgColor)
+                .border(borderWidth, currentBorderColor, RoundedCornerShape(cornerRadius))
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null, // Desactivar el ripple normal de Android
