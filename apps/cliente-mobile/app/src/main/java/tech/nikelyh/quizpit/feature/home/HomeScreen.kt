@@ -28,100 +28,111 @@ import tech.nikelyh.quizpit.ui.components.sketchbookBounceIn
 fun HomeScreen() {
     var pin by remember { mutableStateOf("") }
 
-    Column(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .sketchbookBackground() // Cuadrícula de cuaderno
-            .padding(24.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
-        // Cabecera: Botones superiores tipo "Notas Adhesivas / Pegatinas"
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            // Pegatina Izquierda: Eventos
-            tech.nikelyh.quizpit.ui.components.SketchbookStickerButton(
-                icon = painterResource(id = R.drawable.ic_events),
-                text = stringResource(id = R.string.home_events),
-                rotation = -5f,
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                onClick = { /* TODO: Abrir Eventos */ }
-            )
-            
-            // Pegatina Derecha: Historial
-            tech.nikelyh.quizpit.ui.components.SketchbookStickerButton(
-                icon = painterResource(id = R.drawable.ic_history),
-                text = stringResource(id = R.string.home_history),
-                rotation = 4f,
-                backgroundColor = MaterialTheme.colorScheme.secondary,
-                contentColor = MaterialTheme.colorScheme.onSecondary,
-                onClick = { /* TODO: Mostrar últimas 5 partidas */ }
-            )
-        }
+        val screenHeight = maxHeight
         
-        // Logo
-        Image(
-            painter = painterResource(id = R.drawable.logo_quizpit),
-            contentDescription = "QuizPit Logo",
+        Column(
             modifier = Modifier
-                .size(200.dp)
-                .sketchbookBounceIn() 
-        )
-        
-        Spacer(modifier = Modifier.height(48.dp))
-
-        // PIN Input
-        SketchbookTextField(
-            value = pin,
-            onValueChange = { if (it.length <= 6) pin = it.uppercase() },
-            placeholder = stringResource(id = R.string.home_game_pin_hint)
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Join Button
-        val isPinValid = pin.length == 6
-        SketchbookButton(
-            onClick = { /* TODO: Lógica de unirse */ },
-            enabled = isPinValid,
-            backgroundColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = stringResource(id = R.string.home_join_button),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Black
-            )
-        }
+            Column(
+                modifier = Modifier.heightIn(min = screenHeight - 48.dp), // 48.dp es el padding total (top + bottom)
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                // --- BLOQUE SUPERIOR: Pegatinas ---
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    // Pegatina Izquierda: Eventos
+                    tech.nikelyh.quizpit.ui.components.SketchbookStickerButton(
+                        icon = painterResource(id = R.drawable.ic_events),
+                        text = stringResource(id = R.string.home_events),
+                        rotation = -5f,
+                        backgroundColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        onClick = { /* TODO: Abrir Eventos */ }
+                    )
+                    
+                    // Pegatina Derecha: Historial
+                    tech.nikelyh.quizpit.ui.components.SketchbookStickerButton(
+                        icon = painterResource(id = R.drawable.ic_history),
+                        text = stringResource(id = R.string.home_history),
+                        rotation = 4f,
+                        backgroundColor = MaterialTheme.colorScheme.secondary,
+                        contentColor = MaterialTheme.colorScheme.onSecondary,
+                        onClick = { /* TODO: Mostrar últimas 5 partidas */ }
+                    )
+                }
+                
+                // --- BLOQUE CENTRAL: Logo ---
+                Image(
+                    painter = painterResource(id = R.drawable.logo_quizpit),
+                    contentDescription = "QuizPit Logo",
+                    modifier = Modifier
+                        .size(200.dp)
+                        .sketchbookBounceIn() 
+                )
+                
+                // --- BLOQUE INFERIOR: Formulario y Acciones ---
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    // PIN Input
+                    SketchbookTextField(
+                        value = pin,
+                        onValueChange = { if (it.length <= 6) pin = it.uppercase() },
+                        placeholder = stringResource(id = R.string.home_game_pin_hint)
+                    )
 
-        Spacer(modifier = Modifier.height(16.dp))
+                    // Join Button
+                    val isPinValid = pin.length == 6
+                    SketchbookButton(
+                        onClick = { /* TODO: Lógica de unirse */ },
+                        enabled = isPinValid,
+                        backgroundColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.home_join_button),
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Black
+                        )
+                    }
 
-        // Separador O
-        Text(
-            text = stringResource(id = R.string.home_or_separator),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)
-        )
+                    // Separador O
+                    Text(
+                        text = stringResource(id = R.string.home_or_separator),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)
+                    )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Create Game Button
-        SketchbookButton(
-            onClick = { /* TODO: Lógica de crear partida */ },
-            backgroundColor = MaterialTheme.colorScheme.secondary, // Rosado brillante
-            contentColor = MaterialTheme.colorScheme.onSecondary
-        ) {
-            Text(
-                text = stringResource(id = R.string.home_create_game_button),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Black
-            )
+                    // Create Game Button
+                    SketchbookButton(
+                        onClick = { /* TODO: Lógica de crear partida */ },
+                        backgroundColor = MaterialTheme.colorScheme.secondary,
+                        contentColor = MaterialTheme.colorScheme.onSecondary
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.home_create_game_button),
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Black
+                        )
+                    }
+                }
+            }
         }
     }
 }
