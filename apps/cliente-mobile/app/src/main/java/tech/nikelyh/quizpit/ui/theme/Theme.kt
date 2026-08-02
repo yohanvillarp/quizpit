@@ -37,7 +37,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun QuizpitTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false, // ¡Forzado a modo claro siempre para el estilo Sketchbook!
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false, // Desactivamos el color dinámico para forzar tu estética "Sketchbook"
     content: @Composable () -> Unit

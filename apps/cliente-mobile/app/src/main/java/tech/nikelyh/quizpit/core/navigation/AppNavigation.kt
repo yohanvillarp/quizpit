@@ -16,6 +16,21 @@ import tech.nikelyh.quizpit.feature.store.StoreScreen
 import tech.nikelyh.quizpit.ui.components.QuizpitBottomBar
 import tech.nikelyh.quizpit.ui.components.TopLevelDestination
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+
+private fun String?.toTopLevelDestination(): TopLevelDestination {
+    return when (this) {
+        "store" -> TopLevelDestination.STORE
+        "inventory" -> TopLevelDestination.FAMILIARS
+        "roulette" -> TopLevelDestination.ROULETTE
+        "profile" -> TopLevelDestination.PROFILE
+        else -> TopLevelDestination.HOME
+    }
+}
+
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
@@ -23,13 +38,7 @@ fun AppNavigation() {
     val currentRoute = navBackStackEntry?.destination?.route
 
     // Mapeamos la ruta actual al destino enum correspondiente
-    val currentDestination = when (currentRoute) {
-        "store" -> TopLevelDestination.STORE
-        "inventory" -> TopLevelDestination.FAMILIARS
-        "roulette" -> TopLevelDestination.ROULETTE
-        "profile" -> TopLevelDestination.PROFILE
-        else -> TopLevelDestination.HOME
-    }
+    val currentDestination = currentRoute.toTopLevelDestination()
 
     Scaffold(
         bottomBar = {
@@ -60,7 +69,59 @@ fun AppNavigation() {
         NavHost(
             navController = navController,
             startDestination = "home",
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            enterTransition = {
+                val initialIndex = initialState.destination.route.toTopLevelDestination().ordinal
+                val targetIndex = targetState.destination.route.toTopLevelDestination().ordinal
+                val isMovingRight = targetIndex > initialIndex
+                
+                slideInHorizontally(
+                    initialOffsetX = { fullWidth -> if (isMovingRight) fullWidth else -fullWidth },
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                )
+            },
+            exitTransition = {
+                val initialIndex = initialState.destination.route.toTopLevelDestination().ordinal
+                val targetIndex = targetState.destination.route.toTopLevelDestination().ordinal
+                val isMovingRight = targetIndex > initialIndex
+                
+                slideOutHorizontally(
+                    targetOffsetX = { fullWidth -> if (isMovingRight) -fullWidth else fullWidth },
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                )
+            },
+            popEnterTransition = {
+                val initialIndex = initialState.destination.route.toTopLevelDestination().ordinal
+                val targetIndex = targetState.destination.route.toTopLevelDestination().ordinal
+                val isMovingRight = targetIndex > initialIndex
+                
+                slideInHorizontally(
+                    initialOffsetX = { fullWidth -> if (isMovingRight) fullWidth else -fullWidth },
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                )
+            },
+            popExitTransition = {
+                val initialIndex = initialState.destination.route.toTopLevelDestination().ordinal
+                val targetIndex = targetState.destination.route.toTopLevelDestination().ordinal
+                val isMovingRight = targetIndex > initialIndex
+                
+                slideOutHorizontally(
+                    targetOffsetX = { fullWidth -> if (isMovingRight) -fullWidth else fullWidth },
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                )
+            }
         ) {
             composable("store") {
                 StoreScreen()
