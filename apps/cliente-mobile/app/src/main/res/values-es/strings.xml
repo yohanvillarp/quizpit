@@ -15,4 +15,10 @@
     <string name="screen_store_title">Pantalla de Tienda</string>
     <string name="screen_roulette_title">Pantalla de Ruleta</string>
     <string name="screen_profile_title">Pantalla de Perfil</string>
+    
+    <!-- Home Screen -->
+    <string name="home_game_pin_hint">PIN DE JUEGO</string>
+    <string name="home_join_button">UNIRSE</string>
+    <string name="home_or_separator">O</string>
+    <string name="home_create_game_button">CREAR PARTIDA</string>
 </resources>

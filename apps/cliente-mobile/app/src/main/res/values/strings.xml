@@ -15,4 +15,10 @@
     <string name="screen_store_title">Store Screen</string>
     <string name="screen_roulette_title">Roulette Screen</string>
     <string name="screen_profile_title">Profile Screen</string>
+    
+    <!-- Home Screen -->
+    <string name="home_game_pin_hint">GAME PIN</string>
+    <string name="home_join_button">JOIN</string>
+    <string name="home_or_separator">OR</string>
+    <string name="home_create_game_button">CREATE GAME</string>
 </resources>
