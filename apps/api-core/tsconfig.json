@@ -11,21 +11,18 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "ES2023",
-    "types": ["node"],
     "sourceMap": true,
     "outDir": "./dist",
-    "paths": {
-      "@quiz/*": ["./src/quiz/*"],
-      "@billing/*": ["./src/billing/*"],
-      "@shared/*": ["./src/shared/*"],
-      "@infra/*": ["./src/infrastructure/*"]
-    },
+    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/*": ["src/*"]
+    }
   }
 }
