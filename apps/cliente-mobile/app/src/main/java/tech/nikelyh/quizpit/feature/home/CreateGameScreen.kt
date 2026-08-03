@@ -202,6 +202,9 @@ fun CreateGameScreen(
         enter = androidx.compose.animation.fadeIn() + androidx.compose.animation.scaleIn(initialScale = 0.8f),
         exit = androidx.compose.animation.fadeOut()
     ) {
-        GeneratingQuizOverlay()
+        GeneratingQuizOverlay(
+            pdfUri = selectedFileUri,
+            onNavigateBack = onNavigateBack
+        )
     }
 }
