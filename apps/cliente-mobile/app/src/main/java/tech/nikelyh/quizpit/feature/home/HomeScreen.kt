@@ -32,7 +32,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.draw.clipToBounds
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onNavigateToCreateGame: () -> Unit = {}
+) {
     var pin by remember { mutableStateOf("") }
     var isDraggingItem by remember { mutableStateOf(false) }
 
@@ -193,7 +195,7 @@ fun HomeScreen() {
 
                         // Create Game Button
                         SketchbookButton(
-                            onClick = { /* TODO: Lógica de crear partida */ },
+                            onClick = onNavigateToCreateGame,
                             backgroundColor = MaterialTheme.colorScheme.secondary,
                             contentColor = MaterialTheme.colorScheme.onSecondary
                         ) {
