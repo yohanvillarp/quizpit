@@ -3,9 +3,12 @@ node_modules/
 
 # Builds / Outputs
 .next/
-out/
-build/
-dist/
+/out/
+/build/
+/dist/
+apps/*/out/
+apps/*/build/
+apps/*/dist/
 .turbo/
 
 # React Native / Expo
