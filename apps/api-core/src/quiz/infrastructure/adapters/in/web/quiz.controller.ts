@@ -1,4 +1,5 @@
-import { Controller, Post, Body, Get, Put, Delete, Param, UseGuards, Req, Inject, ConflictException, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Delete, Param, UseGuards, Req, Inject, ConflictException, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateQuizService } from '@/quiz/application/services/create-quiz.service';
 import { QuizModel } from '@/quiz/domain/models/quiz.model';
 import { PrismaService } from '@/infrastructure/database/prisma.service';
@@ -70,12 +71,15 @@ interface AuthedRequest {
   };
 }
 
+import { GenerateQuizFromPdfService } from '@/quiz/application/services/generate-quiz-from-pdf.service';
+
 @Controller('quizzes')
 export class QuizController {
   constructor(
     private readonly createQuizService: CreateQuizService,
     private readonly prisma: PrismaService,
-    @Inject(QUIZ_REPOSITORY) private readonly quizRepository: IQuizRepository
+    @Inject(QUIZ_REPOSITORY) private readonly quizRepository: IQuizRepository,
+    private readonly generateQuizFromPdfService: GenerateQuizFromPdfService
   ) {}
 
   @Get('categories')
@@ -440,5 +444,35 @@ El orden de las opciones debe ser SIEMPRE el mismo en el JSON (la correcta de pr
       }
       throw new ConflictException('Hubo un error al extraer el cuestionario de tus apuntes.');
     }
+  }
+
+  @Post('generate-from-pdf')
+  @UseInterceptors(FileInterceptor('file', {
+    limits: { fileSize: 5 * 1024 * 1024 }, // Max 5 MB
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype !== 'application/pdf') {
+        return cb(new ConflictException('El archivo debe tener formato PDF.'), false);
+      }
+      cb(null, true);
+    }
+  }))
+  async generateFromPdf(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new ConflictException('No se proporcionó ningún archivo PDF.');
+    }
+    
+    // Seguridad Zero Trust: Validación estricta de Magic Bytes
+    if (file.buffer.length < 4) {
+      throw new ConflictException('El archivo está vacío o corrupto.');
+    }
+    
+    // Todo PDF legítimo empieza con '%PDF' (Hex: 25 50 44 46)
+    const magicBytes = file.buffer.toString('hex', 0, 4);
+    if (magicBytes !== '25504446') {
+      throw new ConflictException('Alerta de Seguridad: La firma digital no corresponde a un PDF real. Posible archivo camuflado.');
+    }
+    
+    // Delegamos la lógica al Caso de Uso (Application Layer)
+    return await this.generateQuizFromPdfService.execute(file.buffer, file.originalname);
   }
 }

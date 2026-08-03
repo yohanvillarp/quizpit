@@ -20,6 +20,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   
   // Escuchar en el puerto 3000 para evitar conflictos con game-engine
-  await app.listen(process.env.PORT ?? 3000);
+  // Bind to 0.0.0.0 to allow LAN connections from mobile devices
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
 }
 bootstrap();
