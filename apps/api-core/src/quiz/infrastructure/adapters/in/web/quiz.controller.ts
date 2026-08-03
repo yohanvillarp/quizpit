@@ -5,8 +5,8 @@ import { QuizModel } from '@/quiz/domain/models/quiz.model';
 import { PrismaService } from '@/infrastructure/database/prisma.service';
 import { ClerkAuthGuard } from '@/shared/infrastructure/guards/clerk-auth.guard';
 import { Roles } from '@/shared/domain/decorators/roles.decorator';
-import { QUIZ_REPOSITORY } from '@/quiz/domain/ports/out/quiz.repository.js';
-import type { IQuizRepository } from '@/quiz/domain/ports/out/quiz.repository.js';
+import { QUIZ_REPOSITORY } from '@/quiz/domain/ports/out/quiz.repository';
+import type { IQuizRepository } from '@/quiz/domain/ports/out/quiz.repository';
 
 import { IsString, IsNotEmpty, IsBoolean, IsOptional, IsNumber, ValidateNested, IsArray } from 'class-validator';
 import { Type } from 'class-transformer';

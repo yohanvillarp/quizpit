@@ -1,7 +1,7 @@
 import { Injectable, Inject, ConflictException } from '@nestjs/common';
-import { AI_QUIZ_GENERATOR_PORT } from '../../domain/ports/out/ai-quiz-generator.port.js';
-import type { IAiQuizGeneratorPort } from '../../domain/ports/out/ai-quiz-generator.port.js';
-import { ContentModeratorService } from '../../domain/services/content-moderator.service.js';
+import { AI_QUIZ_GENERATOR_PORT } from '../../domain/ports/out/ai-quiz-generator.port';
+import type { IAiQuizGeneratorPort } from '../../domain/ports/out/ai-quiz-generator.port';
+import { ContentModeratorService } from '../../domain/services/content-moderator.service';
 
 @Injectable()
 export class GenerateQuizFromPdfService {
