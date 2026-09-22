@@ -56,3 +56,7 @@ El cliente de Android utiliza Jetpack Compose y sigue un sistema de diseño estr
   - `res/values/strings.xml` (Idioma base/por defecto: Inglés).
   - `res/values-es/strings.xml` (Idioma: Español).
 - Consumo en Jetpack Compose: `stringResource(id = R.string.nombre_del_texto)`.
+
+### Rendimiento y Animaciones (Performance)
+- **Virtualización Obligatoria (Lazy Loading)**: Prohibido usar `Column` o `Row` con bucles grandes (`forEach`) para renderizar listas o grillas de elementos complejos (especialmente aquellos con `Canvas` o `infiniteTransition`). Se debe utilizar estrictamente `LazyColumn`, `LazyRow` o `LazyVerticalGrid` para asegurar que los componentes fuera de pantalla sean destruidos y no saturen el Main Thread.
+- **Caché de Shaders (GPU)**: Los `RuntimeShader` (AGSL) no deben instanciarse dentro de las vistas usando `remember { RuntimeShader(...) }` si el componente se repetirá múltiples veces (ej. avatares en un listado). Deben extraerse a un patrón Singleton (ej. `ShaderCache`) que compile el shader una sola vez en memoria y devuelva la instancia compartida.

@@ -24,6 +24,8 @@ apps/*/dist/
 .env.development.local
 .env.test.local
 .env.production.local
+google-services.json
+GoogleService-Info.plist
 
 # Logs
 logs
@@ -45,3 +47,6 @@ pnpm-debug.log*
 
 # OS generated files
 Thumbs.db
+
+# Legacy apps (local reference only)
+apps/cliente-web-old/

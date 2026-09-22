@@ -1,23 +1,43 @@
 version: 2
 updates:
-  # Maintain dependencies for npm/pnpm/yarn weekly
+  # Maintain dependencies for npm/pnpm weekly
   - package-ecosystem: "npm"
     directory: "/"
     target-branch: "develop"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
     commit-message:
-      prefix: "fix(deps)"
+      prefix: "chore(deps)"
     groups:
       all-dependencies:
         patterns:
           - "*"
-  
+
   # Maintain GitHub Actions weekly
   - package-ecosystem: "github-actions"
     directory: "/"
     target-branch: "develop"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
     commit-message:
-      prefix: "ci(deps)"
+      prefix: "chore(deps-actions)"
+    groups:
+      all-actions:
+        patterns:
+          - "*"
+
+  # Maintain Gradle dependencies for Android mobile client weekly
+  - package-ecosystem: "gradle"
+    directory: "/apps/cliente-mobile"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "chore(deps-mobile)"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
