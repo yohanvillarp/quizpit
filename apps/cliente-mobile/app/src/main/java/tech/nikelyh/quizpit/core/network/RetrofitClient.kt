@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
     // IMPORTANTE: Si usas un dispositivo físico, cambia esta IP por la IP local de tu PC (ej. 192.168.1.X)
     // 10.0.2.2 es el "localhost" para el Emulador de Android Studio.
-    private const val BASE_URL = "http://10.0.2.2:3000/api/"
+    private val BASE_URL = tech.nikelyh.quizpit.BuildConfig.API_BASE_URL
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
@@ -24,5 +24,14 @@ object RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(QuizApiService::class.java)
+    }
+
+    val avatarApi: AvatarApi by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(AvatarApi::class.java)
     }
 }

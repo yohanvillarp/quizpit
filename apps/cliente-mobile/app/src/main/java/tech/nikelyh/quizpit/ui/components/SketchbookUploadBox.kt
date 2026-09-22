@@ -194,8 +194,12 @@ fun SketchbookUploadBox(
                             fontWeight = FontWeight.Black,
                             color = Color.Black.copy(alpha = 0.8f)
                         )
+                        
+                        val context = androidx.compose.ui.platform.LocalContext.current
+                        val fileName = selectedFileUri?.let { tech.nikelyh.quizpit.feature.home.getFileName(context, it) } ?: "Archivo PDF"
+                        
                         Text(
-                            text = "Generando preguntas (PRÓXIMAMENTE)",
+                            text = fileName,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Medium,
                             color = Color.Black.copy(alpha = 0.5f),

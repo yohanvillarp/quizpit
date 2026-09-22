@@ -9,6 +9,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -24,19 +25,17 @@ fun Modifier.sketchbookBackground(
     gridColor: Color = Color(0xFFE3E2DE), // Un gris muy sutil para que parezca lápiz suave
     gridSize: Dp = 24.dp,
     strokeWidth: Float = 2f
-): Modifier = this.then(
-    Modifier.drawBehind {
-        val sizePx = gridSize.toPx()
-        val width = size.width
-        val height = size.height
+): Modifier = this.drawWithCache {
+    val sizePx = gridSize.toPx()
 
+    onDrawBehind {
         // Dibujar líneas verticales
         var x = 0f
-        while (x < width) {
+        while (x < size.width) {
             drawLine(
                 color = gridColor,
                 start = Offset(x, 0f),
-                end = Offset(x, height),
+                end = Offset(x, size.height),
                 strokeWidth = strokeWidth
             )
             x += sizePx
@@ -44,26 +43,26 @@ fun Modifier.sketchbookBackground(
 
         // Dibujar líneas horizontales
         var y = 0f
-        while (y < height) {
+        while (y < size.height) {
             drawLine(
                 color = gridColor,
                 start = Offset(0f, y),
-                end = Offset(width, y),
+                end = Offset(size.width, y),
                 strokeWidth = strokeWidth
             )
             y += sizePx
         }
     }
-)
+}
 
 /**
- * Modificador para animar la entrada de elementos con un rebote 
+ * Modificador para animar la entrada de elementos con un rebote
  * rápido y "seco", imitando el estilo Stop-Motion o recorte de cartón.
  */
 
 fun Modifier.sketchbookBounceIn(): Modifier = composed {
     val scale = remember { Animatable(0f) }
-    
+
     LaunchedEffect(Unit) {
         scale.animateTo(
             targetValue = 1f,
@@ -73,7 +72,7 @@ fun Modifier.sketchbookBounceIn(): Modifier = composed {
             )
         )
     }
-    
+
     this.graphicsLayer {
         scaleX = scale.value
         scaleY = scale.value
@@ -86,39 +85,33 @@ fun Modifier.sketchbookBounceIn(): Modifier = composed {
  */
 
 
-fun Modifier.sketchbookColoring(color: Color): Modifier = this.then(
-    Modifier.drawBehind {
+fun Modifier.sketchbookColoring(color: Color): Modifier = this.drawWithCache {
+    onDrawBehind {
         val rnd = kotlin.random.Random(color.value.toLong() xor 42L)
-        
+
         // Base clara para que el color de fondo se note
         drawRect(color = color.copy(alpha = 0.3f))
-        
-        val strokeWidth = 16f
-        val path = androidx.compose.ui.graphics.Path()
-        
-        // Dibujamos unos 50 trazos
+
+        val strokeWidthPx = 16f
+
+        // Dibujamos unos 50 trazos como líneas individuales
         for (i in 0..50) {
             val startX = rnd.nextFloat() * size.width * 1.2f - (size.width * 0.1f)
             val startY = rnd.nextFloat() * size.height * 1.2f - (size.height * 0.1f)
             val length = rnd.nextFloat() * 100f + 40f
-            val angle = -45f + (rnd.nextFloat() * 30f - 15f) 
-            
+            val angle = -45f + (rnd.nextFloat() * 30f - 15f)
+
             val rad = angle * Math.PI / 180.0
             val endX = startX + (Math.cos(rad) * length).toFloat()
             val endY = startY + (Math.sin(rad) * length).toFloat()
-            
-            path.moveTo(startX, startY)
-            path.lineTo(endX, endY)
-        }
-        
-        // Trazos marcados
-        drawPath(
-            path = path,
-            color = color.copy(alpha = 0.7f), 
-            style = androidx.compose.ui.graphics.drawscope.Stroke(
-                width = strokeWidth,
+
+            drawLine(
+                color = color.copy(alpha = 0.7f),
+                start = Offset(startX, startY),
+                end = Offset(endX, endY),
+                strokeWidth = strokeWidthPx,
                 cap = androidx.compose.ui.graphics.StrokeCap.Round
             )
-        )
+        }
     }
-)
+}

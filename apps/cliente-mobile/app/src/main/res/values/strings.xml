@@ -21,6 +21,56 @@
     <string name="home_join_button">JOIN</string>
     <string name="home_or_separator">OR</string>
     <string name="home_create_game_button">CREATE GAME</string>
+    <!-- Create Game Screen -->
+    <string name="create_game_mode_normal">NORMAL</string>
+    <string name="create_game_mode_power">POWER</string>
+
     <string name="home_events">Events</string>
     <string name="home_history">History</string>
+    <!-- Familiars Screen -->
+    <string name="familiars_active_title">LINKED FAMILIAR</string>
+    <string name="familiars_active_subtitle">Your faithful companion for the next match</string>
+    <string name="familiars_collection_title">SANCTUARY</string>
+    <string name="familiars_collection_subtitle">Drag a familiar up to summon it</string>
+    <string name="familiars_btn_equipped">EQUIPPED</string>
+    <string name="familiars_btn_change">CHANGE</string>
+    <string name="familiars_btn_equip">EQUIP</string>
+    <string name="familiars_badge_active">ACTIVE</string>
+    <string name="familiars_filter_all">ALL</string>
+    <string name="familiars_filter_offensive">OFFENSIVE</string>
+    <string name="familiars_filter_defensive">DEFENSIVE</string>
+    <string name="familiars_filter_tactical">TACTICAL</string>
+    <string name="familiars_filter_special">SPECIAL</string>
+    <string name="familiars_btn_locked">LOCKED</string>
+    <string name="familiars_unknown_power">UNKNOWN POWER</string>
+    <string name="familiars_unknown_desc">No data available for this familiar.</string>
+    <!-- Profile -->
+    <string name="profile_title">PROFILE</string>
+    <string name="profile_guest_name">Mystery Guest</string>
+    <string name="profile_guest_warning">If you uninstall the game, you\'ll lose all your familiars! Link your account to secure them.</string>
+    <string name="profile_offer_title">UNLOCK A MYSTERY FAMILIAR</string>
+    <string name="profile_offer_desc">Link your account to secure your progress and unlock an exclusive Mythic Familiar.</string>
+    <string name="profile_btn_google_signin">Continue with Google</string>
+    <string name="profile_stats_title">STATS</string>
+    <string name="profile_stats_familiars">Familiars Unlocked</string>
+    <string name="profile_btn_logout">LOG OUT</string>
+    
+    <!-- Home -->
+    <string name="home_gift_title">FREE FAMILIAR!</string>
+    <string name="home_gift_desc">Claim your exclusive Mythic Familiar! Link your account to unlock it.</string>
+    <string name="home_gift_btn_link">LINK ACCOUNT</string>
+    <string name="home_gift_btn_later">LATER</string>
+
+    <!-- Store Screen -->
+    <string name="store_header_title">MARKET</string>
+    <string name="store_pro_title">QUIZPIT PRO</string>
+    <string name="store_pro_desc">Unlock Mythic Familiars, Infinite Lives and exclusive Perks!</string>
+    <string name="store_pro_btn">GET PRO</string>
+    <string name="store_pro_benefit_mythic">Mythic Starter Familiar</string>
+    <string name="store_pro_benefit_ink">10 Daily Inks</string>
+    <string name="store_pro_benefit_ads">No Ads</string>
+    <string name="store_daily_title">DAILY GIFT</string>
+    <string name="store_daily_btn">CLAIM FREE</string>
+    <string name="store_ink_title">INK DROPS</string>
+    <string name="store_buy_button">BUY</string>
 </resources>

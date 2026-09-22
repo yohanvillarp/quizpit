@@ -26,6 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.Spring
+import androidx.compose.ui.platform.LocalContext
+import tech.nikelyh.quizpit.core.audio.SoundManager
 
 @Composable
 fun SketchbookButton(
@@ -46,6 +48,7 @@ fun SketchbookButton(
     val currentShadowColor = if (enabled) shadowColor else Color.Gray
     val currentContentColor = if (enabled) contentColor else Color.DarkGray
     
+    val context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
@@ -62,7 +65,8 @@ fun SketchbookButton(
     val surfaceOffset = shadowOffset - activeShadowOffset
 
     Box(
-        modifier = modifier.padding(bottom = shadowOffset, end = shadowOffset)
+        modifier = modifier.padding(bottom = shadowOffset, end = shadowOffset),
+        propagateMinConstraints = true
     ) {
         // Sombra sólida fija (no se mueve)
         Box(
@@ -75,7 +79,6 @@ fun SketchbookButton(
         // Superficie del botón (se mueve hacia la sombra al ser presionada)
         Row(
             modifier = Modifier
-                .fillMaxWidth()
                 .offset(x = surfaceOffset, y = surfaceOffset)
                 .background(Color(0xFFFAF9F5), RoundedCornerShape(cornerRadius)) // Fondo de papel sólido
                 .clip(RoundedCornerShape(cornerRadius))
@@ -85,7 +88,10 @@ fun SketchbookButton(
                     interactionSource = interactionSource,
                     indication = null, // Desactivar el ripple normal de Android
                     enabled = enabled,
-                    onClick = onClick
+                    onClick = {
+                        SoundManager.playClickSound(context)
+                        onClick()
+                    }
                 )
                 .padding(vertical = 16.dp, horizontal = 24.dp),
             verticalAlignment = Alignment.CenterVertically,

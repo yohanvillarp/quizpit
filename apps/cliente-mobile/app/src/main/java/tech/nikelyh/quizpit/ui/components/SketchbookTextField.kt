@@ -22,12 +22,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+import androidx.compose.foundation.text.KeyboardOptions
+
 @Composable
 fun SketchbookTextField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
     modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     backgroundColor: Color = Color.White,
     textColor: Color = MaterialTheme.colorScheme.onSurface,
     borderColor: Color = MaterialTheme.colorScheme.onBackground,
@@ -51,6 +54,7 @@ fun SketchbookTextField(
         BasicTextField(
             value = value,
             onValueChange = onValueChange,
+            keyboardOptions = keyboardOptions,
             textStyle = TextStyle(
                 color = textColor,
                 fontSize = 32.sp,

@@ -1,0 +1,44 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+  <path
+      android:pathData="M70,160 Q100,175 130,160 Q145,130 135,100 L65,100 Q55,130 70,160 Z"
+      android:strokeWidth="6"
+      android:fillColor="#00000000"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:strokeColor="#000000"/>
+  <path
+      android:pathData="M130,150 Q170,140 180,110 Q170,80 150,100"
+      android:strokeWidth="6"
+      android:fillColor="#00000000"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:strokeColor="#000000"/>
+  <path
+      android:pathData="M60,100 L140,100 L100,140 Z"
+      android:strokeWidth="6"
+      android:fillColor="#00000000"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:strokeColor="#000000"/>
+  <path
+      android:pathData="M70,100 L60,70 L90,90 M130,100 L140,70 L110,90"
+      android:strokeWidth="6"
+      android:fillColor="#00000000"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:strokeColor="#000000"/>
+  <!-- Eyes and Nose -->
+  <path
+      android:pathData="M 85, 107 a 3,3 0 1,0 0,6 a 3,3 0 1,0 0,-6"
+      android:fillColor="#000000"/>
+  <path
+      android:pathData="M 115, 107 a 3,3 0 1,0 0,6 a 3,3 0 1,0 0,-6"
+      android:fillColor="#000000"/>
+  <path
+      android:pathData="M 100, 121 a 4,4 0 1,0 0,8 a 4,4 0 1,0 0,-8"
+      android:fillColor="#000000"/>
+</vector>
