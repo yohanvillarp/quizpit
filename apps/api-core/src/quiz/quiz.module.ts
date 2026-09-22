@@ -10,6 +10,8 @@ import { GeminiQuizGeneratorAdapter } from './infrastructure/adapters/out/ai/gem
 import { AI_QUIZ_GENERATOR_PORT } from './domain/ports/out/ai-quiz-generator.port';
 import { TextOptimizerService } from './domain/services/text-optimizer.service';
 import { ContentModeratorService } from './domain/services/content-moderator.service';
+import { GAME_ENGINE_PORT } from './domain/ports/out/game-engine.port';
+import { HttpGameEngineAdapter } from './infrastructure/adapters/out/game-engine/http-game-engine.adapter';
 
 @Module({
   controllers: [QuizController],
@@ -27,6 +29,11 @@ import { ContentModeratorService } from './domain/services/content-moderator.ser
       provide: AI_QUIZ_GENERATOR_PORT,
       useClass: GeminiQuizGeneratorAdapter,
     },
+    {
+      provide: GAME_ENGINE_PORT,
+      useClass: HttpGameEngineAdapter,
+    },
   ],
 })
 export class QuizModule {}
+

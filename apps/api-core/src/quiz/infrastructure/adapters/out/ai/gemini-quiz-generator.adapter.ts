@@ -54,6 +54,7 @@ Deberás generar un objeto JSON con la siguiente estructura exacta. NO ESCRIBAS 
 {
   "title": "Un título académico y descriptivo",
   "description": "Una descripción educativa",
+  "topic": "El tema principal o categoría detectada (ej. Historia, Biología, Matemáticas)",
   "questions": [
     {
       "text": "La pregunta",
