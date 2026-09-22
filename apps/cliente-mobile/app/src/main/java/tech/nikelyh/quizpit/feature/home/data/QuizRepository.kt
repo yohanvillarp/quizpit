@@ -14,7 +14,7 @@ import java.io.FileOutputStream
 class QuizRepository(private val context: Context) {
     private val apiService = RetrofitClient.apiService
 
-    suspend fun generateQuizFromPdf(pdfUri: Uri): Boolean {
+    suspend fun generateQuizFromPdf(pdfUri: Uri, deviceId: String): GeneratedQuizResult? {
         return withContext(Dispatchers.IO) {
             try {
                 // 1. Copy the Uri content to a temporary file
@@ -30,17 +30,24 @@ class QuizRepository(private val context: Context) {
                 // 2. Create MultipartBody
                 val requestFile = tempFile.asRequestBody("application/pdf".toMediaTypeOrNull())
                 val body = MultipartBody.Part.createFormData("file", tempFile.name, requestFile)
-
-                // 3. Send to API
-                val response = apiService.generateFromPdf(body)
                 
-                // 4. Clean up
+                // 3. Create hostId part
+                val hostIdBody = okhttp3.RequestBody.create("text/plain".toMediaTypeOrNull(), deviceId)
+
+                // 4. Send to API
+                val response = apiService.generateFromPdf(body, hostIdBody)
+                
+                // 5. Clean up
                 tempFile.delete()
 
-                response.isSuccessful
+                if (response.isSuccessful) {
+                    response.body()
+                } else {
+                    null
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
-                false
+                null
             }
         }
     }
