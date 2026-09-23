@@ -13,6 +13,9 @@ updates:
       all-dependencies:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   # Maintain GitHub Actions weekly
   - package-ecosystem: "github-actions"
@@ -27,6 +30,9 @@ updates:
       all-actions:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   # Maintain Gradle dependencies for Android mobile client weekly
   - package-ecosystem: "gradle"
@@ -41,3 +47,6 @@ updates:
       all-dependencies:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
