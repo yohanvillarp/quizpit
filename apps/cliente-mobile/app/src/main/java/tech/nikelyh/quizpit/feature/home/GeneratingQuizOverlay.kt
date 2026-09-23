@@ -23,6 +23,7 @@ import tech.nikelyh.quizpit.feature.home.data.QuizRepository
 import tech.nikelyh.quizpit.core.domain.file.ValidatePdfFileUseCase
 import tech.nikelyh.quizpit.core.infrastructure.file.AndroidFileValidatorImpl
 import android.content.Context
+import android.provider.Settings
 
 fun getFileName(context: Context, uri: Uri): String {
     var result: String? = null
@@ -40,15 +41,20 @@ fun getFileName(context: Context, uri: Uri): String {
     return result ?: "Archivo PDF"
 }
 
+
 @Composable
 fun GeneratingQuizOverlay(
     pdfUri: Uri?,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onQuizGenerated: (roomId: String) -> Unit
 ) {
     var dotsCount by remember { mutableIntStateOf(0) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var fileName by remember { mutableStateOf("Documento") }
     val context = LocalContext.current
+    
+    // Generate a unique device ID (we use ANDROID_ID for this prototype)
+    val deviceId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
 
     LaunchedEffect(Unit) {
         val dotsJob = launch {
@@ -71,12 +77,20 @@ fun GeneratingQuizOverlay(
             if (validationResult.isSuccess) {
                 // 3. Subir si es válido
                 val repository = QuizRepository(context)
-                val success = repository.generateQuizFromPdf(pdfUri)
+                val result = repository.generateQuizFromPdf(pdfUri, deviceId)
                 dotsJob.cancel()
-                onNavigateBack()
+                if (result != null) {
+                    onQuizGenerated(result.roomId)
+                } else {
+                    tech.nikelyh.quizpit.core.domain.EnergyManager.addInk(1) // Reembolso por fallo
+                    errorMessage = "Error al comunicarse con el servidor."
+                    delay(3500)
+                    onNavigateBack()
+                }
             } else {
                 // 4. Bloquear y mostrar error si es malicioso o pesado
                 dotsJob.cancel()
+                tech.nikelyh.quizpit.core.domain.EnergyManager.addInk(1) // Reembolso por fallo
                 errorMessage = validationResult.exceptionOrNull()?.message ?: "Error de seguridad."
                 delay(3500) // Mostrar el error unos segundos antes de regresar
                 onNavigateBack()

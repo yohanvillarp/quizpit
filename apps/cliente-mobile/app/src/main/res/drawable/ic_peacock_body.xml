@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Body -->
+    <path android:pathData="M100,70 L130,150 L70,150 Z" android:fillColor="#00BCD4" android:strokeColor="#1E325C" android:strokeWidth="2"/>
+    <!-- Belly accent -->
+    <path android:pathData="M100,90 L120,150 L80,150 Z" android:fillColor="#FFC107"/>
+    <!-- Neck & Head -->
+    <path android:pathData="M90,100 L110,100 L100,40 Z" android:fillColor="#00BCD4" android:strokeColor="#1E325C" android:strokeWidth="2"/>
+    <path android:pathData="M85,30 L115,30 L100,60 Z" android:fillColor="#00BCD4" android:strokeColor="#1E325C" android:strokeWidth="2"/>
+    <!-- Beak -->
+    <path android:pathData="M115,35 L140,40 L110,45 Z" android:fillColor="#FFC107"/>
+    <!-- Crest -->
+    <path android:pathData="M95,30 L90,10 L100,25 Z" android:fillColor="#FFC107"/>
+    <path android:pathData="M100,30 L100,5 L105,25 Z" android:fillColor="#FFC107"/>
+    <path android:pathData="M105,30 L110,10 L110,25 Z" android:fillColor="#FFC107"/>
+    <!-- Eye -->
+    <path android:pathData="M95,40 L105,35 L110,40 L100,45 Z" android:fillColor="#ffffff"/>
+    <path android:pathData="M100,38 L104,39 L102,42 L98,41 Z" android:fillColor="#B71C1C"/>
+</vector>

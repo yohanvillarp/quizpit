@@ -1,0 +1,26 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Base Head -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#1a1f3a"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M12,20 C18,20 20,16 20,12 C20,9 18,7 18,4 L15,8 L12,7 L9,8 L6,4 C6,7 4,9 4,12 C4,16 6,20 12,20 Z" />
+    <!-- Bandit Mask -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#1a1f3a"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M4,10 C8,10 10,12 12,12 C14,12 16,10 20,10" />
+    <!-- Nose -->
+    <path
+        android:fillColor="#1a1f3a"
+        android:pathData="M12,17 m-1,0 a1,1 0 1,1 2,0 a1,1 0 1,1 -2,0" />
+</vector>

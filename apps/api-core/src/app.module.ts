@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { QuizModule } from './quiz/quiz.module';
 import { LoggerModule } from 'nestjs-pino';
+import { TimeController } from './shared/infrastructure/web/time.controller';
+import { AvatarModule } from './avatar/avatar.module';
 
 @Module({
   imports: [
@@ -19,8 +21,9 @@ import { LoggerModule } from 'nestjs-pino';
       },
     }),
     QuizModule,
+    AvatarModule,
   ],
-  controllers: [],
+  controllers: [TimeController],
   providers: [],
 })
 export class AppModule {}

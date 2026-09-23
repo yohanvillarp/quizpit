@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Tail Feathers -->
+    <path android:pathData="M100,100 L30,30 L80,10 Z" android:fillColor="#4CAF50"/>
+    <path android:pathData="M100,100 L80,10 L120,10 Z" android:fillColor="#00BCD4"/>
+    <path android:pathData="M100,100 L120,10 L170,30 Z" android:fillColor="#4CAF50"/>
+    <path android:pathData="M100,100 L170,30 L190,80 Z" android:fillColor="#00BCD4"/>
+    <path android:pathData="M100,100 L190,80 L190,120 Z" android:fillColor="#4CAF50"/>
+    <path android:pathData="M100,100 L190,120 L170,170 Z" android:fillColor="#00BCD4"/>
+    <path android:pathData="M100,100 L170,170 L120,190 Z" android:fillColor="#4CAF50"/>
+    <path android:pathData="M100,100 L120,190 L80,190 Z" android:fillColor="#00BCD4"/>
+    <path android:pathData="M100,100 L80,190 L30,170 Z" android:fillColor="#4CAF50"/>
+    <path android:pathData="M100,100 L30,170 L10,120 Z" android:fillColor="#00BCD4"/>
+    <path android:pathData="M100,100 L10,120 L10,80 Z" android:fillColor="#4CAF50"/>
+    <path android:pathData="M100,100 L10,80 L30,30 Z" android:fillColor="#00BCD4"/>
+    <!-- Eyes on feathers -->
+    <path android:pathData="M55,40 L60,45 L55,50 L50,45 Z" android:fillColor="#FFC107"/>
+    <path android:pathData="M100,25 L105,30 L100,35 L95,30 Z" android:fillColor="#FFC107"/>
+    <path android:pathData="M145,40 L150,45 L145,50 L140,45 Z" android:fillColor="#FFC107"/>
+    <path android:pathData="M175,100 L180,105 L175,110 L170,105 Z" android:fillColor="#FFC107"/>
+    <path android:pathData="M145,150 L150,155 L145,160 L140,155 Z" android:fillColor="#FFC107"/>
+    <path android:pathData="M100,165 L105,170 L100,175 L95,170 Z" android:fillColor="#FFC107"/>
+    <path android:pathData="M55,150 L60,155 L55,160 L50,155 Z" android:fillColor="#FFC107"/>
+    <path android:pathData="M25,100 L30,105 L25,110 L20,105 Z" android:fillColor="#FFC107"/>
+</vector>

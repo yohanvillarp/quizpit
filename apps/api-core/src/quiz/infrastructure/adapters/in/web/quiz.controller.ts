@@ -456,9 +456,13 @@ El orden de las opciones debe ser SIEMPRE el mismo en el JSON (la correcta de pr
       cb(null, true);
     }
   }))
-  async generateFromPdf(@UploadedFile() file: any) {
+  async generateFromPdf(@UploadedFile() file: any, @Body('hostId') hostId: string) {
     if (!file) {
       throw new ConflictException('No se proporcionó ningún archivo PDF.');
+    }
+    
+    if (!hostId) {
+      throw new ConflictException('Se requiere el ID del anfitrión (hostId).');
     }
     
     // Seguridad Zero Trust: Validación estricta de Magic Bytes
@@ -473,6 +477,6 @@ El orden de las opciones debe ser SIEMPRE el mismo en el JSON (la correcta de pr
     }
     
     // Delegamos la lógica al Caso de Uso (Application Layer)
-    return await this.generateQuizFromPdfService.execute(file.buffer, file.originalname);
+    return await this.generateQuizFromPdfService.execute(file.buffer, file.originalname, hostId);
   }
 }

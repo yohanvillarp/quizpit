@@ -25,7 +25,53 @@ jobs:
           
       - name: Grant execute permission for gradlew
         run: chmod +x apps/cliente-mobile/gradlew || true
-        
+
+      - name: Setup google-services.json
+        env:
+          GOOGLE_SERVICES_SECRET: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          mkdir -p apps/cliente-mobile/app
+          if [ -n "$GOOGLE_SERVICES_SECRET" ]; then
+            if echo "$GOOGLE_SERVICES_SECRET" | grep -q "^{"; then
+              echo "$GOOGLE_SERVICES_SECRET" > apps/cliente-mobile/app/google-services.json
+            else
+              echo "$GOOGLE_SERVICES_SECRET" | base64 -d > apps/cliente-mobile/app/google-services.json
+            fi
+          else
+            echo "Generando google-services.json simulado para compilacion de CI"
+            cat << 'EOF' > apps/cliente-mobile/app/google-services.json
+          {
+            "project_info": {
+              "project_number": "123456789012",
+              "project_id": "quizpit-ci-mock",
+              "storage_bucket": "quizpit-ci-mock.appspot.com"
+            },
+            "client": [
+              {
+                "client_info": {
+                  "mobilesdk_app_id": "1:123456789012:android:abcdef0123456789",
+                  "android_client_info": {
+                    "package_name": "tech.nikelyh.quizpit"
+                  }
+                },
+                "oauth_client": [],
+                "api_key": [
+                  {
+                    "current_key": "AIzaSyFakeKeyForCIMockOnly123456789"
+                  }
+                ],
+                "services": {
+                  "analytics_service": {
+                    "status": 1
+                  }
+                }
+              }
+            ],
+            "configuration_version": "1"
+          }
+          EOF
+          fi
+
       - name: Build with Gradle
         working-directory: apps/cliente-mobile
         run: ./gradlew assembleDebug

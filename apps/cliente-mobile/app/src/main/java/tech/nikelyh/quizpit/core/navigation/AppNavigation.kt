@@ -5,206 +5,141 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import tech.nikelyh.quizpit.feature.home.HomeScreen
-import tech.nikelyh.quizpit.feature.inventory.InventoryScreen
 import tech.nikelyh.quizpit.feature.store.StoreScreen
-import tech.nikelyh.quizpit.ui.components.QuizpitBottomBar
 import tech.nikelyh.quizpit.ui.components.TopLevelDestination
+import tech.nikelyh.quizpit.ui.components.QuizpitBottomBar
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import kotlinx.coroutines.launch
+import androidx.navigation.NavController
 
-private fun String?.toTopLevelDestination(): TopLevelDestination {
-    return when (this) {
-        "store" -> TopLevelDestination.STORE
-        "inventory" -> TopLevelDestination.FAMILIARS
-        "roulette" -> TopLevelDestination.ROULETTE
-        "profile" -> TopLevelDestination.PROFILE
-        else -> TopLevelDestination.HOME
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun MainPagerScreen(navController: NavController) {
+    val pagerState = rememberPagerState(
+        initialPage = TopLevelDestination.HOME.ordinal,
+        pageCount = { TopLevelDestination.values().size }
+    )
+    val coroutineScope = rememberCoroutineScope()
+
+    Scaffold(
+        bottomBar = {
+            val currentDestination = TopLevelDestination.values()[pagerState.currentPage]
+            QuizpitBottomBar(
+                currentDestination = currentDestination,
+                onNavigateToDestination = { destination ->
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(destination.ordinal)
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.padding(innerPadding)
+        ) { page ->
+            when (TopLevelDestination.values()[page]) {
+                TopLevelDestination.STORE -> StoreScreen()
+                TopLevelDestination.FAMILIARS -> tech.nikelyh.quizpit.feature.familiars.FamiliarsScreen(
+                    onBackClick = { coroutineScope.launch { pagerState.animateScrollToPage(TopLevelDestination.HOME.ordinal) } }
+                )
+                TopLevelDestination.HOME -> HomeScreen(
+                    onNavigateToCreateGame = { navController.navigate(Screen.CreateGame.route) },
+                    onNavigateToProfile = { coroutineScope.launch { pagerState.animateScrollToPage(TopLevelDestination.PROFILE.ordinal) } }
+                )
+                TopLevelDestination.ROULETTE -> tech.nikelyh.quizpit.feature.roulette.RouletteScreen()
+                TopLevelDestination.PROFILE -> tech.nikelyh.quizpit.feature.profile.ProfileScreen()
+            }
+        }
     }
 }
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
-    // Mapeamos la ruta actual al destino enum correspondiente
-    val currentDestination = currentRoute.toTopLevelDestination()
-
-    Scaffold(
-        bottomBar = {
-            androidx.compose.animation.AnimatedVisibility(
-                visible = currentRoute != "create_game",
-                enter = androidx.compose.animation.slideInVertically(initialOffsetY = { it }),
-                exit = androidx.compose.animation.slideOutVertically(targetOffsetY = { it })
-            ) {
-                QuizpitBottomBar(
-                    currentDestination = currentDestination,
-                    onNavigateToDestination = { destination ->
-                        val route = when (destination) {
-                            TopLevelDestination.STORE -> "store"
-                            TopLevelDestination.FAMILIARS -> "inventory"
-                            TopLevelDestination.HOME -> "home"
-                            TopLevelDestination.ROULETTE -> "roulette"
-                            TopLevelDestination.PROFILE -> "profile"
-                        }
-                        // Solo navegar si la ruta es diferente a la actual
-                        if (currentRoute != route) {
-                            navController.navigate(route) {
-                                popUpTo("home") {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
+    
+    NavHost(
+        navController = navController,
+        startDestination = "splash"
+    ) {
+        composable("splash") {
+            tech.nikelyh.quizpit.feature.splash.SplashScreen(
+                onSplashFinished = {
+                    navController.navigate("main_pager") {
+                        popUpTo("splash") { inclusive = true }
                     }
-                )
-            }
-        }
-    ) { innerPadding ->
-        // Si estamos en la ruta create_game, ignoramos el padding inferior para que llene la pantalla inmediatamente
-        val bottomPadding = if (currentRoute == "create_game") 0.dp else innerPadding.calculateBottomPadding()
-        val currentPadding = PaddingValues(
-            top = innerPadding.calculateTopPadding(),
-            bottom = bottomPadding
-        )
-
-        NavHost(
-            navController = navController,
-            startDestination = "home",
-            modifier = Modifier.padding(currentPadding),
-            enterTransition = {
-                if (targetState.destination.route == "create_game" || initialState.destination.route == "create_game") {
-                    androidx.compose.animation.EnterTransition.None // Se maneja en la ruta específica
-                } else {
-                    val initialIndex = initialState.destination.route.toTopLevelDestination().ordinal
-                    val targetIndex = targetState.destination.route.toTopLevelDestination().ordinal
-                    val isMovingRight = targetIndex > initialIndex
-                    
-                    slideInHorizontally(
-                        initialOffsetX = { fullWidth -> if (isMovingRight) fullWidth else -fullWidth },
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioNoBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
-                    )
                 }
+            )
+        }
+        
+        composable("main_pager") {
+            MainPagerScreen(navController = navController)
+        }
+        
+        composable(
+            route = Screen.CreateGame.route,
+            enterTransition = {
+                androidx.compose.animation.slideInVertically(
+                    initialOffsetY = { it },
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow
+                    )
+                )
             },
             exitTransition = {
-                if (targetState.destination.route == "create_game" || initialState.destination.route == "create_game") {
-                    androidx.compose.animation.ExitTransition.None // Se maneja en la ruta específica
-                } else {
-                    val initialIndex = initialState.destination.route.toTopLevelDestination().ordinal
-                    val targetIndex = targetState.destination.route.toTopLevelDestination().ordinal
-                    val isMovingRight = targetIndex > initialIndex
-                    
-                    slideOutHorizontally(
-                        targetOffsetX = { fullWidth -> if (isMovingRight) -fullWidth else fullWidth },
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioNoBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
+                androidx.compose.animation.slideOutVertically(
+                    targetOffsetY = { it },
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMedium
                     )
-                }
-            },
-            popEnterTransition = {
-                if (targetState.destination.route == "create_game" || initialState.destination.route == "create_game") {
-                    androidx.compose.animation.EnterTransition.None // Se maneja en la ruta específica
-                } else {
-                    val initialIndex = initialState.destination.route.toTopLevelDestination().ordinal
-                    val targetIndex = targetState.destination.route.toTopLevelDestination().ordinal
-                    val isMovingRight = targetIndex > initialIndex
-                    
-                    slideInHorizontally(
-                        initialOffsetX = { fullWidth -> if (isMovingRight) fullWidth else -fullWidth },
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioNoBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
-                    )
-                }
+                )
             },
             popExitTransition = {
-                if (targetState.destination.route == "create_game" || initialState.destination.route == "create_game") {
-                    androidx.compose.animation.ExitTransition.None // Se maneja en la ruta específica
-                } else {
-                    val initialIndex = initialState.destination.route.toTopLevelDestination().ordinal
-                    val targetIndex = targetState.destination.route.toTopLevelDestination().ordinal
-                    val isMovingRight = targetIndex > initialIndex
-                    
-                    slideOutHorizontally(
-                        targetOffsetX = { fullWidth -> if (isMovingRight) -fullWidth else fullWidth },
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioNoBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
+                androidx.compose.animation.slideOutVertically(
+                    targetOffsetY = { it },
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMedium
                     )
-                }
+                )
             }
         ) {
-            composable("store") {
-                StoreScreen()
-            }
-            composable("inventory") {
-                InventoryScreen()
-            }
-            composable("home") {
-                HomeScreen(
-                    onNavigateToCreateGame = { navController.navigate("create_game") }
-                )
-            }
-            composable(
-                route = "create_game",
-                enterTransition = {
-                    androidx.compose.animation.slideInVertically(
-                        initialOffsetY = { it },
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessLow
-                        )
-                    )
-                },
-                exitTransition = {
-                    androidx.compose.animation.slideOutVertically(
-                        targetOffsetY = { it },
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioNoBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
-                    )
-                },
-                popExitTransition = {
-                    androidx.compose.animation.slideOutVertically(
-                        targetOffsetY = { it },
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioNoBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
-                    )
+            tech.nikelyh.quizpit.feature.home.CreateGameScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToLobby = { roomId ->
+                    navController.navigate(NavArgScreen.Lobby.createRoute(roomId)) {
+                        popUpTo("main_pager") {
+                            inclusive = false
+                        }
+                    }
                 }
-            ) {
-                tech.nikelyh.quizpit.feature.home.CreateGameScreen(
-                    onNavigateBack = { navController.popBackStack() }
-                )
-            }
-            composable("roulette") {
-                tech.nikelyh.quizpit.feature.roulette.RouletteScreen()
-            }
-            composable("profile") {
-                tech.nikelyh.quizpit.feature.profile.ProfileScreen()
-            }
+            )
+        }
+        
+        composable(
+            route = NavArgScreen.Lobby.routeWithArgs
+        ) { backStackEntry ->
+            val roomId = backStackEntry.arguments?.getString(NavArgScreen.Lobby.argRoomId) ?: ""
+            tech.nikelyh.quizpit.feature.lobby.LobbyScreen(
+                roomId = roomId,
+                onNavigateBack = {
+                    navController.popBackStack("main_pager", false)
+                }
+            )
         }
     }
 }

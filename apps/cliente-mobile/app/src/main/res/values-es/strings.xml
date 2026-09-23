@@ -21,6 +21,56 @@
     <string name="home_join_button">UNIRSE</string>
     <string name="home_or_separator">O</string>
     <string name="home_create_game_button">CREAR PARTIDA</string>
+    <!-- Create Game Screen -->
+    <string name="create_game_mode_normal">NORMAL</string>
+    <string name="create_game_mode_power">PODER</string>
+
     <string name="home_events">Eventos</string>
     <string name="home_history">Historial</string>
+    <!-- Familiars Screen -->
+    <string name="familiars_active_title">FAMILIAR VINCULADO</string>
+    <string name="familiars_active_subtitle">Tu fiel compañero para la próxima partida</string>
+    <string name="familiars_collection_title">SANTUARIO</string>
+    <string name="familiars_collection_subtitle">Arrastra un familiar arriba para invocarlo</string>
+    <string name="familiars_btn_equipped">EQUIPADO</string>
+    <string name="familiars_btn_change">CAMBIAR</string>
+    <string name="familiars_btn_equip">EQUIPAR</string>
+    <string name="familiars_badge_active">ACTIVO</string>
+    <string name="familiars_filter_all">TODOS</string>
+    <string name="familiars_filter_offensive">OFENSIVO</string>
+    <string name="familiars_filter_defensive">DEFENSIVO</string>
+    <string name="familiars_filter_tactical">TÁCTICO</string>
+    <string name="familiars_filter_special">ESPECIAL</string>
+    <string name="familiars_btn_locked">BLOQUEADO</string>
+    <string name="familiars_unknown_power">PODER DESCONOCIDO</string>
+    <string name="familiars_unknown_desc">No se tienen datos sobre este familiar.</string>
+    <!-- Profile -->
+    <string name="profile_title">PERFIL</string>
+    <string name="profile_guest_name">Invitado Misterioso</string>
+    <string name="profile_guest_warning">Si desinstalas el juego o cambias de teléfono, ¡perderás a tus familiares!</string>
+    <string name="profile_offer_title">DESBLOQUEA UN MISTERIO</string>
+    <string name="profile_offer_desc">Vincula tu cuenta con Google para asegurar tu progreso y desbloquear un Familiar Mítico exclusivo.</string>
+    <string name="profile_btn_google_signin">Continuar con Google</string>
+    <string name="profile_stats_title">ESTADÍSTICAS</string>
+    <string name="profile_stats_familiars">Familiares Desbloqueados</string>
+    <string name="profile_btn_logout">DESCONECTAR</string>
+    
+    <!-- Home -->
+    <string name="home_gift_title">¡FAMILIAR GRATIS!</string>
+    <string name="home_gift_desc">¡Reclama tu Familiar Mítico exclusivo! Vincula tu cuenta para desbloquearlo.</string>
+    <string name="home_gift_btn_link">VINCULAR CUENTA</string>
+    <string name="home_gift_btn_later">MÁS TARDE</string>
+
+    <!-- Store Screen -->
+    <string name="store_header_title">MERCADO</string>
+    <string name="store_pro_title">QUIZPIT PRO</string>
+    <string name="store_pro_desc">¡Desbloquea Familiares Míticos, Vidas Infinitas y ventajas exclusivas!</string>
+    <string name="store_pro_btn">HACERSE PRO</string>
+    <string name="store_pro_benefit_mythic">Personaje Mítico Inicial</string>
+    <string name="store_pro_benefit_ink">10 Tintas Diarias</string>
+    <string name="store_pro_benefit_ads">Sin Anuncios</string>
+    <string name="store_daily_title">REGALO DIARIO</string>
+    <string name="store_daily_btn">RECLAMAR GRATIS</string>
+    <string name="store_ink_title">GOTAS DE TINTA</string>
+    <string name="store_buy_button">COMPRAR</string>
 </resources>

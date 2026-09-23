@@ -85,6 +85,7 @@ model SuperPower {
   name        String
   description String
   effectType  String
+  powerType   String   @default("SPECIAL") // OFFENSIVE, DEFENSIVE, TACTICAL, SPECIAL
   
   avatars     Avatar[] 
 }
@@ -93,6 +94,8 @@ model Avatar {
   id           String      @id
   name         String
   phrase       String
+  isMythic     Boolean     @default(false)
+  isUnlocked   Boolean     @default(true)
   
   superPowerId String?
   superPower   SuperPower? @relation(fields: [superPowerId], references: [id])

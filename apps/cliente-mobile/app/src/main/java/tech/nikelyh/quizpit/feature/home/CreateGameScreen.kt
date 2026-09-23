@@ -21,18 +21,39 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import tech.nikelyh.quizpit.ui.components.SketchbookButton
 
+import kotlinx.coroutines.launch
+
 @Composable
 fun CreateGameScreen(
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateToLobby: (String) -> Unit
 ) {
     var selectedFileUri by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf<android.net.Uri?>(null) }
     var isUploadComplete by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     var isGenerating by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
-    
+    var selectedMode by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf("NORMAL") }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+
     val pdfLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
         contract = androidx.activity.result.contract.ActivityResultContracts.GetContent()
     ) { uri: android.net.Uri? ->
-        selectedFileUri = uri
+        if (uri != null) {
+            // Reset states before validation to avoid UI inconsistencies
+            selectedFileUri = null
+            isUploadComplete = false
+
+            scope.launch {
+                val validator = tech.nikelyh.quizpit.core.infrastructure.file.AndroidFileValidatorImpl(context)
+                val result = validator.validatePdf(uri)
+                if (result.isSuccess) {
+                    selectedFileUri = uri
+                } else {
+                    val error = result.exceptionOrNull()?.message ?: "Error al validar archivo"
+                    android.widget.Toast.makeText(context, error, android.widget.Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     Box(
@@ -50,7 +71,7 @@ fun CreateGameScreen(
                 .drawBehind {
                     // Fondo amarillo pálido
                     drawRect(color = Color(0xFFFFFDE7))
-                    
+
                     // Líneas rayadas azules de cuaderno legal
                     val lineHeight = 30.dp.toPx()
                     var y = lineHeight * 2
@@ -149,24 +170,27 @@ fun CreateGameScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(start = 64.dp, end = 24.dp, top = 80.dp),
+                    .padding(start = 64.dp, end = 24.dp, top = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "NUEVA PARTIDA",
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Black,
-                    color = Color.Black,
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = Color(0xFF1a1f3a),
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                tech.nikelyh.quizpit.ui.components.InkCounterBadge(
                     modifier = Modifier.padding(bottom = 32.dp)
                 )
 
                 tech.nikelyh.quizpit.ui.components.SketchbookUploadBox(
                     selectedFileUri = selectedFileUri,
                     onClick = { pdfLauncher.launch("application/pdf") },
-                    onClearFile = { 
+                    onClearFile = {
                         selectedFileUri = null
-                        isUploadComplete = false 
+                        isUploadComplete = false
                     },
                     onUploadComplete = {
                         isUploadComplete = true
@@ -179,17 +203,90 @@ fun CreateGameScreen(
                     exit = androidx.compose.animation.fadeOut() + androidx.compose.animation.shrinkVertically()
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Spacer(modifier = Modifier.height(32.dp))
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
+                        ) {
+                            SketchbookButton(
+                                onClick = { selectedMode = "NORMAL" },
+                                backgroundColor = if (selectedMode == "NORMAL") MaterialTheme.colorScheme.secondary else Color(0xFFFAF9F5),
+                                contentColor = if (selectedMode == "NORMAL") MaterialTheme.colorScheme.onSecondary else Color(0xFF1a1f3a),
+                                modifier = Modifier.weight(1f).aspectRatio(1f)
+                            ) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    tech.nikelyh.quizpit.ui.components.ModeIcon(
+                                        isPower = false,
+                                        tint = if (selectedMode == "NORMAL") MaterialTheme.colorScheme.onSecondary else Color(0xFF1a1f3a),
+                                        modifier = Modifier.size(32.dp).padding(bottom = 8.dp)
+                                    )
+                                    Text(
+                                        text = androidx.compose.ui.res.stringResource(id = tech.nikelyh.quizpit.R.string.create_game_mode_normal),
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                    )
+                                }
+                            }
+                            SketchbookButton(
+                                onClick = { selectedMode = "POWER" },
+                                backgroundColor = if (selectedMode == "POWER") MaterialTheme.colorScheme.secondary else Color(0xFFFAF9F5),
+                                contentColor = if (selectedMode == "POWER") MaterialTheme.colorScheme.onSecondary else Color(0xFF1a1f3a),
+                                modifier = Modifier.weight(1f).aspectRatio(1f)
+                            ) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    tech.nikelyh.quizpit.ui.components.ModeIcon(
+                                        isPower = true,
+                                        tint = if (selectedMode == "POWER") MaterialTheme.colorScheme.onSecondary else Color(0xFF1a1f3a),
+                                        modifier = Modifier.size(32.dp).padding(bottom = 8.dp)
+                                    )
+                                    Text(
+                                        text = androidx.compose.ui.res.stringResource(id = tech.nikelyh.quizpit.R.string.create_game_mode_power),
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                    )
+                                }
+                            }
+                        }
+
                         SketchbookButton(
-                            onClick = { isGenerating = true },
+                            onClick = {
+                                if (tech.nikelyh.quizpit.core.domain.EnergyManager.spendInk()) {
+                                    isGenerating = true
+                                }
+                            },
                             backgroundColor = MaterialTheme.colorScheme.primary,
                             contentColor = MaterialTheme.colorScheme.onPrimary
                         ) {
-                            Text(
-                                text = "CREAR",
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Black
-                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Text(
+                                    text = "CREAR",
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Black
+                                )
+                                Text(
+                                    text = "-1",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                androidx.compose.material3.Icon(
+                                    painter = androidx.compose.ui.res.painterResource(id = tech.nikelyh.quizpit.R.drawable.ic_ink),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp),
+                                    tint = androidx.compose.ui.graphics.Color.Unspecified
+                                )
+                            }
                         }
                     }
                 }
@@ -204,7 +301,13 @@ fun CreateGameScreen(
     ) {
         GeneratingQuizOverlay(
             pdfUri = selectedFileUri,
-            onNavigateBack = onNavigateBack
+            onNavigateBack = {
+                isGenerating = false // Return to this screen without navigating back completely
+            },
+            onQuizGenerated = { roomId ->
+                isGenerating = false
+                onNavigateToLobby(roomId)
+            }
         )
     }
 }

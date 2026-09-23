@@ -20,50 +20,105 @@ async function main() {
     });
   }
 
-  // 2. Insertar SuperPoderes
+  // 2. Insertar SuperPoderes (de los 13 personajes)
   const superPowers = [
     {
       id: 'thief',
       name: 'Ladrón Astuto',
-      description: 'Roba el 50% de los puntos ganados en una ronda a un oponente que elijas (solo funciona si él acierta y tú fallas).',
-      effectType: 'STEAL_POINTS'
+      description: 'Ve la respuesta de tu rival y cópiala. Si aciertas, le robas la mitad de sus puntos.',
+      effectType: 'STEAL_POINTS',
+      powerType: 'OFFENSIVE'
     },
     {
       id: 'fifty_fifty',
-      name: 'Visión Clara',
-      description: 'Elimina la mitad de las opciones incorrectas de la pantalla (50/50). Solo 1 uso por partida.',
-      effectType: 'REMOVE_OPTION'
-    },
-    {
-      id: 'nine_lives',
-      name: '7 Vidas',
-      description: 'Te permite fallar una vez. Si aciertas en tu segundo intento, obtienes la mitad de los puntos. Solo 1 uso por partida.',
-      effectType: 'SECOND_CHANCE'
+      name: '50/50',
+      description: 'Elimina las opciones incorrectas para que sea más fácil adivinar.',
+      effectType: 'REMOVE_OPTION',
+      powerType: 'TACTICAL'
     },
     {
       id: 'brute_force',
       name: 'Fuerza Bruta',
-      description: 'Duplica tus puntos en esta ronda si aciertas, pero pierdes el doble de puntos si te equivocas.',
-      effectType: 'DOUBLE_OR_NOTHING'
+      description: 'Gana el DOBLE de puntos si aciertas, pero pierdes puntos si fallas. ¡Arriésgate!',
+      effectType: 'DOUBLE_OR_NOTHING',
+      powerType: 'OFFENSIVE'
+    },
+    {
+      id: 'peacock_hypnosis',
+      name: 'Hipnosis de Plumas',
+      description: 'Lanza una ilusión que intercambia físicamente la posición de las opciones en las pantallas de tus rivales.',
+      effectType: 'SCRAMBLE_OPTIONS',
+      powerType: 'TACTICAL'
+    },
+    {
+      id: 'chameleon_mimic',
+      name: 'Mimetismo',
+      description: 'Copia instantáneamente el poder del rival seleccionado, y bloquea pasivamente ataques directos hacia ti.',
+      effectType: 'COPY_POWER',
+      powerType: 'DEFENSIVE'
+    },
+    {
+      id: 'bat_blackout',
+      name: 'Apagón',
+      description: 'Oculta el texto de la pregunta a todos los demás jugadores durante los primeros 4 segundos.',
+      effectType: 'BLACKOUT',
+      powerType: 'OFFENSIVE'
+    },
+    {
+      id: 'dragon_burn',
+      name: 'Tierra Quemada',
+      description: 'Quema y oculta una opción al azar en las pantallas de todos tus rivales. Aumenta sus pérdidas si se equivocan.',
+      effectType: 'BURN_OPTION',
+      powerType: 'OFFENSIVE'
+    },
+    {
+      id: 'nine_lives',
+      name: '7 Vidas',
+      description: 'Si te equivocas, recibes la mitad de los puntos como premio de consolación. Un seguro de vida.',
+      effectType: 'SECOND_CHANCE',
+      powerType: 'DEFENSIVE'
     },
     {
       id: 'speed_boost',
-      name: 'Liebre',
-      description: 'Si respondes correctamente en los primeros 3 segundos de la ronda, obtienes un multiplicador de x1.5 puntos.',
-      effectType: 'SPEED_BOOST'
+      name: 'Impulso',
+      description: 'Si aciertas, ganas +50% de puntos extra por ser veloz.',
+      effectType: 'SPEED_BOOST',
+      powerType: 'TACTICAL'
     },
     {
       id: 'loyalty',
       name: 'Lealtad',
-      description: 'Comparte el 50% de tus puntos ganados en esta ronda con un compañero que elijas (incluso si él falló).',
-      effectType: 'SHARE_POINTS'
+      description: 'Ve la respuesta de tu amigo en pantalla para que puedan ayudarse a responder.',
+      effectType: 'SHARE_POINTS',
+      powerType: 'DEFENSIVE'
+    },
+    {
+      id: 'gallo_silence',
+      name: 'Rey del Gallinero',
+      description: 'Silencia a todos los demás jugadores. Nadie podrá usar sus poderes en esta ronda.',
+      effectType: 'SILENCE_ALL',
+      powerType: 'SPECIAL'
+    },
+    {
+      id: 'duck_water',
+      name: 'Espejismo Acuático',
+      description: 'Inunda la pantalla de tus rivales. Sus opciones de respuesta se ondularán mágicamente como si estuvieran bajo el agua, dificultando enormemente su lectura.',
+      effectType: 'WATER_MIRAGE',
+      powerType: 'OFFENSIVE'
+    },
+    {
+      id: 'medusa_toxin',
+      name: 'Neuro-Toxina',
+      description: 'Congela el reloj del oponente de un color tóxico y mezcla visualmente las letras de sus respuestas durante los últimos 3 segundos.',
+      effectType: 'TOXIN',
+      powerType: 'OFFENSIVE'
     }
   ];
 
   for (const power of superPowers) {
     await prisma.superPower.upsert({
       where: { id: power.id },
-      update: {},
+      update: power,
       create: power,
     });
   }
@@ -74,37 +129,105 @@ async function main() {
       id: 'fox',
       name: 'Zorro',
       phrase: '¡A la victoria con astucia!',
-      superPowerId: 'thief'
+      superPowerId: 'thief',
+      isMythic: false,
+      isUnlocked: true
     },
     {
       id: 'owl',
       name: 'Búho',
       phrase: 'La sabiduría es nuestra mejor arma.',
-      superPowerId: 'fifty_fifty'
-    },
-    {
-      id: 'cat',
-      name: 'Gato',
-      phrase: 'Curiosidad, y 9 vidas para fallar.',
-      superPowerId: 'nine_lives'
+      superPowerId: 'fifty_fifty',
+      isMythic: false,
+      isUnlocked: true
     },
     {
       id: 'bear',
       name: 'Oso',
       phrase: '¡Fuerza y concentración para cada pregunta!',
-      superPowerId: 'brute_force'
+      superPowerId: 'brute_force',
+      isMythic: false,
+      isUnlocked: true
+    },
+    {
+      id: 'peacock',
+      name: 'Pavo Real',
+      phrase: '¡Belleza y distracciones visuales!',
+      superPowerId: 'peacock_hypnosis',
+      isMythic: true,
+      isUnlocked: false
+    },
+    {
+      id: 'chameleon',
+      name: 'Camaleón',
+      phrase: 'Me adapto y sobrevivo.',
+      superPowerId: 'chameleon_mimic',
+      isMythic: true,
+      isUnlocked: false
+    },
+    {
+      id: 'bat',
+      name: 'Murciélago',
+      phrase: 'La oscuridad es mi aliada.',
+      superPowerId: 'bat_blackout',
+      isMythic: true,
+      isUnlocked: false
+    },
+    {
+      id: 'dragon',
+      name: 'Dragón',
+      phrase: 'Fuego y destrucción a los rivales.',
+      superPowerId: 'dragon_burn',
+      isMythic: true,
+      isUnlocked: false
+    },
+    {
+      id: 'cat',
+      name: 'Gato',
+      phrase: 'Curiosidad y 7 vidas para fallar.',
+      superPowerId: 'nine_lives',
+      isMythic: false,
+      isUnlocked: true
     },
     {
       id: 'rabbit',
       name: 'Conejo',
       phrase: '¡Velocidad máxima en las respuestas!',
-      superPowerId: 'speed_boost'
+      superPowerId: 'speed_boost',
+      isMythic: false,
+      isUnlocked: true
     },
     {
       id: 'dog',
       name: 'Perro',
       phrase: '¡El mejor amigo de tus notas!',
-      superPowerId: 'loyalty'
+      superPowerId: 'loyalty',
+      isMythic: false,
+      isUnlocked: true
+    },
+    {
+      id: 'gallo',
+      name: 'Gallo',
+      phrase: '¡A despertar y reinar en el gallinero!',
+      superPowerId: 'gallo_silence',
+      isMythic: true,
+      isUnlocked: false
+    },
+    {
+      id: 'duck',
+      name: 'PATO',
+      phrase: '¡Al agua patos!',
+      superPowerId: 'duck_water',
+      isMythic: true,
+      isUnlocked: true
+    },
+    {
+      id: 'medusa',
+      name: 'Medusa Astral',
+      phrase: 'No me mires o te congelarás.',
+      superPowerId: 'medusa_toxin',
+      isMythic: true,
+      isUnlocked: false
     }
   ];
 

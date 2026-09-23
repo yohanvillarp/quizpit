@@ -1,0 +1,35 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Tail -->
+    <path android:pathData="M120,90 Q170,40 185,70 Q160,95 125,110 Z" android:fillColor="#1E325C"/>
+    <path android:pathData="M115,100 Q165,60 175,90 Q150,110 120,120 Z" android:fillColor="#1E325C"/>
+    <path android:pathData="M110,110 Q150,90 155,120 Q130,125 115,130 Z" android:fillColor="#1E325C"/>
+    <!-- Body -->
+    <path android:pathData="M70,70 L110,70 L135,120 Q130,170 80,165 Q40,160 55,110 Z" android:fillColor="#4A0E17"/>
+    <!-- Chest accent -->
+    <path android:pathData="M60,110 Q70,160 100,150 Q120,140 125,120 Q80,110 60,110 Z" android:fillColor="#D4AF37" android:fillAlpha="0.2"/>
+    <!-- Wing -->
+    <path android:pathData="M70,95 L115,135 L60,145 Z" android:fillColor="#D4AF37" android:strokeColor="#AA7C11" android:strokeWidth="2"/>
+    <path android:pathData="M75,105 L105,130" android:strokeColor="#AA7C11" android:strokeWidth="1.5"/>
+    <!-- Neck/Collar -->
+    <path android:pathData="M65,70 L115,70 L110,95 L70,95 Z" android:fillColor="#D4AF37"/>
+    <!-- Head -->
+    <path android:pathData="M75,35 L105,35 L115,70 L65,70 Z" android:fillColor="#4A0E17"/>
+    <!-- Crest -->
+    <path android:pathData="M70,40 L75,15 L85,30 L95,5 L105,30 L115,20 L110,40 Z" android:fillColor="#D4AF37"/>
+    <!-- Beak -->
+    <path android:pathData="M105,45 L145,52 L105,65 Z" android:fillColor="#D4AF37"/>
+    <!-- Eye -->
+    <path android:pathData="M85,48 L95,51 L95,57 L85,54 Z" android:fillColor="#ffffff"/>
+    <path android:pathData="M 92, 52 a 2,2 0 1,0 0,4 a 2,2 0 1,0 0,-4" android:fillColor="#E63946"/>
+    <!-- Eyebrow -->
+    <path android:pathData="M80,46 L100,50" android:strokeColor="#D4AF37" android:strokeWidth="3" android:strokeLineCap="round"/>
+    <!-- Wattle -->
+    <path android:pathData="M100,65 L110,85 L90,80 Z" android:fillColor="#E63946"/>
+    <!-- Legs -->
+    <path android:pathData="M75,160 L75,185 M65,185 L75,185 M85,185 L75,185" android:strokeColor="#D4AF37" android:strokeWidth="3" android:strokeLineCap="round"/>
+    <path android:pathData="M100,160 L100,185 M90,185 L100,185 M110,185 L100,185" android:strokeColor="#D4AF37" android:strokeWidth="3" android:strokeLineCap="round"/>
+</vector>
