@@ -112,14 +112,14 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
-    implementation("com.revenuecat.purchases:purchases:10.16.0")
-    implementation("com.revenuecat.purchases:purchases-ui:10.16.0")
+    implementation("com.revenuecat.purchases:purchases:10.22.1")
+    implementation("com.revenuecat.purchases:purchases-ui:10.22.1")
 
     // Navegación
-    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.navigation:navigation-compose:2.10.1")
 
     // Splash Screen
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.core:core-splashscreen:1.2.0")
 
     // Networking (Retrofit & OkHttp)
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
@@ -128,17 +128,17 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // WebSockets (Socket.IO)
-    implementation("io.socket:socket.io-client:2.1.1")
+    implementation("io.socket:socket.io-client:2.1.2")
   // Import the Firebase BoM
-  implementation(platform("com.google.firebase:firebase-bom:34.17.0"))
+  implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
   implementation("com.google.firebase:firebase-analytics")
   implementation("com.google.firebase:firebase-auth")
   
   // Google Sign-In with Credential Manager
   implementation("androidx.credentials:credentials:1.2.2")
   implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
-  implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
+  implementation("com.google.android.libraries.identity.googleid:googleid:1.2.1")
 
   // Coil para cargar la foto de perfil real
-  implementation("io.coil-kt:coil-compose:2.6.0")
+  implementation("io.coil-kt:coil-compose:2.7.0")
 }
