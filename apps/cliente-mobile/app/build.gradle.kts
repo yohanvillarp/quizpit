@@ -112,8 +112,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
-    implementation("com.revenuecat.purchases:purchases:10.23.4")
-    implementation("com.revenuecat.purchases:purchases-ui:10.23.4")
+    implementation("com.revenuecat.purchases:purchases:10.24.2")
+    implementation("com.revenuecat.purchases:purchases-ui:10.24.2")
 
     // Navegación
     implementation("androidx.navigation:navigation-compose:2.10.2")
