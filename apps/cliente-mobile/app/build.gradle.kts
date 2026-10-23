@@ -124,8 +124,8 @@ dependencies {
     // Networking (Retrofit & OkHttp)
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.okhttp3:okhttp:5.5.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.5.0")
 
     // WebSockets (Socket.IO)
     implementation("io.socket:socket.io-client:2.1.2")
