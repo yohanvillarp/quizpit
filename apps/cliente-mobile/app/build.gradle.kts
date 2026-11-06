@@ -130,7 +130,7 @@ dependencies {
     // WebSockets (Socket.IO)
     implementation("io.socket:socket.io-client:2.1.2")
   // Import the Firebase BoM
-  implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
+  implementation(platform("com.google.firebase:firebase-bom:35.1.0"))
   implementation("com.google.firebase:firebase-analytics")
   implementation("com.google.firebase:firebase-auth")
   
