@@ -113,7 +113,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation("com.revenuecat.purchases:purchases:10.28.1")
-    implementation("com.revenuecat.purchases:purchases-ui:10.28.1")
+    implementation("com.revenuecat.purchases:purchases-ui:11.2.1")
 
     // Navegación
     implementation("androidx.navigation:navigation-compose:2.10.2")
